@@ -3,46 +3,48 @@ package web.api.models;
 import javax.persistence.*;
 import java.util.Date;
 
-@Entity(name="Users")
-public class User {
+@Entity(name="Prospects")
+public class Prospect {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(nullable = false, updatable = false)
-    private Long userId;
+    private Long prospectId;
     @Column(nullable = false)
     private String firstName;
+    @Column(nullable = false)
     private String lastName;
-    @Column(nullable = false, unique = true)
+    @Column(nullable = false)
     private String emailId;
+    @Column(nullable = false)
     private String password;
+    @Column(nullable = false)
     private Date dateOfBirth;
-    private String address;
-    @Column(nullable = false, unique = true, length = 10)
+    @Column(nullable = false, length = 10)
     private String contact;
-    @Enumerated(EnumType.STRING)
-    private Role role;
+    private String address;
+    private boolean userStatus = false;
 
-    public User() {
+    public Prospect(){
+
     }
 
-    public User(String firstName, String lastName, String emailId, String password, Date dateOfBirth, String address, String contact, Role role) {
+    public Prospect(String firstName, String lastName, String emailId, String password, Date dateOfBirth, String contact, String address) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.emailId = emailId;
         this.password = password;
         this.dateOfBirth = dateOfBirth;
-        this.address = address;
         this.contact = contact;
-        this.role = role;
+        this.address = address;
     }
 
-    public Long getUserId() {
-        return userId;
+    public Long getProspectId() {
+        return prospectId;
     }
 
-    public void setUserId(Long userId) {
-        this.userId = userId;
+    public void setProspectId(Long prospectId) {
+        this.prospectId = prospectId;
     }
 
     public String getFirstName() {
@@ -69,6 +71,14 @@ public class User {
         this.emailId = emailId;
     }
 
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
     public Date getDateOfBirth() {
         return dateOfBirth;
     }
@@ -85,14 +95,6 @@ public class User {
         this.contact = contact;
     }
 
-    public Role getRole() {
-        return role;
-    }
-
-    public void setRole(Role role) {
-        this.role = role;
-    }
-
     public String getAddress() {
         return address;
     }
@@ -101,24 +103,23 @@ public class User {
         this.address = address;
     }
 
-    public String getPassword() {
-        return password;
+    public boolean isUserStatus() {
+        return userStatus;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public void setUserStatus(boolean userStatus) {
+        this.userStatus = userStatus;
     }
 
     @Override
     public String toString() {
-        return "User{" +
-                "userId=" + userId +
+        return "Prospect{" +
+                "prospectId=" + prospectId +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", emailId='" + emailId + '\'' +
                 ", dateOfBirth=" + dateOfBirth +
                 ", contact='" + contact + '\'' +
-                ", role=" + role +
                 '}';
     }
 }
