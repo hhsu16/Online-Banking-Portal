@@ -10,7 +10,6 @@ import Register from "./components/register";
 import Home from "./components/home";
 import Profile from "./components/profile";
 import BoardUser from "./components/board-user";
-// import BoardModerator from "./components/board-moderator";
 // import BoardAdmin from "./components/board-admin";
 
 class App extends Component {
@@ -19,7 +18,6 @@ class App extends Component {
     this.logOut = this.logOut.bind(this);
 
     this.state = {
-      showModeratorBoard: false,
       showAdminBoard: false,
       currentUser: undefined,
     };
@@ -31,7 +29,6 @@ class App extends Component {
     if (user) {
       this.setState({
         currentUser: user,
-        showModeratorBoard: user.roles.includes("ROLE_MODERATOR"),
         showAdminBoard: user.roles.includes("ROLE_ADMIN"),
       });
     }
