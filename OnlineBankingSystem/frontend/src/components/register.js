@@ -2,7 +2,8 @@ import React, { Component } from "react";
 import Form from "react-validation/build/form";
 import Input from "react-validation/build/input";
 import CheckButton from "react-validation/build/button";
-import { isEmail } from "validator";
+import { isEmail, isMobilePhone } from "validator";
+import DatePicker from "react-date-picker";
 
 import AuthService from "../services/auth";
 
@@ -26,11 +27,21 @@ const email = (value) => {
   }
 };
 
-const vusername = (value) => {
-  if (value.length < 3 || value.length > 20) {
+const phone = (value) => {
+  if (!isMobilePhone(value)) {
     return (
       <div className="alert alert-danger" role="alert">
-        The username must be between 3 and 20 characters.
+        This is not a valid phone.
+      </div>
+    );
+  }
+};
+
+const vusername = (value) => {
+  if (value.length < 2 || value.length > 20) {
+    return (
+      <div className="alert alert-danger" role="alert">
+        The username must be between 2 and 20 characters.
       </div>
     );
   }
@@ -50,22 +61,63 @@ export default class Register extends Component {
   constructor(props) {
     super(props);
     this.handleRegister = this.handleRegister.bind(this);
-    this.onChangeUsername = this.onChangeUsername.bind(this);
+    this.onChangeFirstname = this.onChangeFirstname.bind(this);
+    this.onChangeLastname = this.onChangeLastname.bind(this);
     this.onChangeEmail = this.onChangeEmail.bind(this);
     this.onChangePassword = this.onChangePassword.bind(this);
+    this.onChangeConfirmPassword = this.onChangeConfirmPassword.bind(this);
+    this.onChangeDateOfBirth = this.onChangeDateOfBirth.bind(this);
+    this.onChangeAddress = this.onChangeAddress.bind(this);
+    this.onChangeZip = this.onChangeZip.bind(this);
+    this.onChangeCountry = this.onChangeCountry.bind(this);
+    this.onChangeTel = this.onChangeTel.bind(this);
 
     this.state = {
-      username: "",
+      firstname: "",
+      lastname: "",
       email: "",
       password: "",
+      confirmPassword: "",
+      dateOfBirth: new Date(),
+      tel: "",
+      address: "",
+
+      countryOptions: [
+        {
+          name: "Select…",
+          value: null,
+        },
+        {
+          name: "United State",
+          value: "United State",
+        },
+        {
+          name: "China",
+          value: "China",
+        },
+        {
+          name: "India",
+          value: "India",
+        },
+      ],
+      countryValue: "?",
+
+      zip: "",
+      ssn: "",
       successful: false,
       message: "",
     };
   }
 
-  onChangeUsername(e) {
+  onChangeFirstname(e) {
     this.setState({
-      username: e.target.value,
+      firstname: e.target.value,
+    });
+  }
+
+  onChangeLastname(e) {
+    this.setState({
+      lastname: e.target.value,
     });
   }
 
@@ -81,6 +133,42 @@ export default class Register extends Component {
     });
   }
 
+  onChangeConfirmPassword(e) {
+    this.setState({
+      confirmPassword: e.target.value,
+    });
+  }
+
+  onChangeDateOfBirth() {
+    this.setState({
+      dateOfBirth: new Date(),
+    });
+  }
+
+  onChangeAddress(e) {
+    this.setState({
+      address: e.target.value,
+    });
+  }
+  onChangeZip(e) {
+    this.setState({
+      zip: e.target.value,
+    });
+  }
+
+  onChangeTel(e) {
+    this.setState({
+      tel: e.target.value,
+    });
+  }
+
+  onChangeCountry = (e) => {
+    this.setState({
+      countryValue: e.target.value,
+    });
+  };
+
+  // TO_DO : api call
   handleRegister(e) {
     e.preventDefault();
 
@@ -123,13 +211,7 @@ export default class Register extends Component {
   render() {
     return (
       <div className="col-md-12">
-        <div className="card card-container">
-          <img
-            src="//ssl.gstatic.com/accounts/ui/avatar_2x.png"
-            alt="profile-img"
-            className="profile-img-card"
-          />
-
+        <div className="card-header">
           <Form
             onSubmit={this.handleRegister}
             ref={(c) => {
@@ -139,13 +221,25 @@ export default class Register extends Component {
             {!this.state.successful && (
               <div>
                 <div className="form-group">
-                  <label htmlFor="username">Username</label>
+                  <label htmlFor="firstname">First Name</label>
                   <Input
                     type="text"
                     className="form-control"
-                    name="username"
-                    value={this.state.username}
-                    onChange={this.onChangeUsername}
+                    name="firstname"
+                    value={this.state.firstname}
+                    onChange={this.onChangeFirstname}
+                    validations={[required, vusername]}
+                  />
+                </div>
+
+                <div className="form-group">
+                  <label htmlFor="lastname">Last Name</label>
+                  <Input
+                    type="text"
+                    className="form-control"
+                    name="lastname"
+                    value={this.state.lastname}
+                    onChange={this.onChangeLastname}
                     validations={[required, vusername]}
                   />
                 </div>
@@ -171,6 +265,82 @@ export default class Register extends Component {
                     value={this.state.password}
                     onChange={this.onChangePassword}
                     validations={[required, vpassword]}
+                  />
+                </div>
+
+                <div className="form-group">
+                  <label htmlFor="confirmPassword">Confirm Password</label>
+                  <Input
+                    type="password"
+                    className="form-control"
+                    name="confirmPassword"
+                    value={this.state.confirmPassword}
+                    onChange={this.onChangeConfirmPassword}
+                    validations={[required, vpassword]}
+                  />
+                </div>
+
+                <div className="form-group">
+                  <label htmlFor="dateOfBirth">Date of Birth</label>
+                  <DatePicker
+                    onChange={this.onChangeDateOfBirth}
+                    value={this.state.dateOfBirth}
+                    validations={[required]}
+                  />
+                  {/* <p>{JSON.stringify(this.state.dateOfBirth)}</p> */}
+                </div>
+
+                <div className="form-group">
+                  <label htmlFor="address">Address</label>
+                  <Input
+                    type="textarea"
+                    className="form-control"
+                    name="address"
+                    value={this.state.address}
+                    onChange={this.onChangeAddress}
+                    validations={[required]}
+                  />
+                </div>
+
+                <div className="form-group">
+                  <label htmlFor="postal-code">ZIP</label>
+                  <Input
+                    type="text"
+                    className="form-control"
+                    name="zip"
+                    value={this.state.zip}
+                    onChange={this.onChangeZip}
+                    validations={[required]}
+                  />
+                </div>
+
+                <div className="form-group">
+                  <label htmlFor="country">Country</label>
+                  <div>
+                    <select
+                      className="form-control"
+                      onChange={this.onChangeCountry}
+                      value={this.state.countryValue}
+                    >
+                      {this.state.countryOptions.map((item) => (
+                        <option key={item.value} value={item.value}>
+                          {item.name}
+                        </option>
+                      ))}
+                    </select>
+                    {/* <p>Country data: {this.state.countryValue}</p> */}
+                  </div>
+                </div>
+
+                <div className="form-group">
+                  <label htmlFor="tel">Telephone</label>
+                  <Input
+                    type="tel"
+                    className="form-control"
+                    name="tel"
+                    onChange={this.onChangeTel}
+                    value={this.state.tel}
+                    validations={[required, phone]}
                   />
                 </div>
 
