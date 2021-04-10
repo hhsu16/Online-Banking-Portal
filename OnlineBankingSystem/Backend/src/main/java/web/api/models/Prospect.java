@@ -1,10 +1,11 @@
 package web.api.models;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Date;
 
 @Entity(name="Prospects")
-public class Prospect {
+public class Prospect implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
