@@ -47,5 +47,8 @@ public class UserService {
         return user;
     }
 
+    public User getUserFromUserId(Long uId){
+        return userRepository.findUserByUserIdEquals(uId);
+    }
 
 }

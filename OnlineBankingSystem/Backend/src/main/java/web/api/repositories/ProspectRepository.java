@@ -12,8 +12,7 @@ import java.util.Optional;
 public interface ProspectRepository extends JpaRepository<Prospect,Long> {
     List<Prospect> findAllByUserStatusEquals(boolean status);
 
-    Optional<Prospect> findProspectsByUserStatusEqualsAndEmailIdEqualsAndContactEquals(boolean status, String email, String contact);
-    //    User save(User user) throws Exception;
-    //    Prospect save(Prospect  prospect) throws Exception;
-    //    Role getUserRole(String email, String password);
+    Optional<Prospect> findProspectsByUserStatusEqualsAndEmailIdEqualsAndContactEquals
+            (boolean status, String email, String contact);
+
 }
