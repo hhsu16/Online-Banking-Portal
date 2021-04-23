@@ -2,10 +2,9 @@ package web.api.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import web.api.exceptions.UserNotFoundException;
 import web.api.models.Prospect;
-import web.api.models.User;
 import web.api.repositories.ProspectRepository;
-import web.api.repositories.UserRepository;
 
 import java.util.List;
 
@@ -14,7 +13,7 @@ import java.util.List;
 public class ProspectService {
     private  final ProspectRepository prospectRepository;
 
-@Autowired
+    @Autowired
     public ProspectService(ProspectRepository prospectRepository) {
         this.prospectRepository = prospectRepository;
     }
@@ -27,5 +26,12 @@ public class ProspectService {
     public Prospect addProspect(Prospect prospectObj)
     {
         return prospectRepository.save(prospectObj);
+    }
+
+    public void updateProspectStatus(boolean status, String emailId, String contact){
+        Prospect p = prospectRepository.findProspectsByUserStatusEqualsAndEmailIdEqualsAndContactEquals(status, emailId, contact)
+        .orElseThrow(()->new UserNotFoundException("Prospect not found with username : "+emailId));
+        p.setUserStatus(true);
+        prospectRepository.save(p);
     }
 }
