@@ -1,17 +1,13 @@
 package web.api.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-import web.api.models.Role;
+import org.springframework.web.bind.annotation.*;
+import web.api.models.User;
 import web.api.services.UserService;
 
-import java.net.URI;
-
+@CrossOrigin(origins = "http://localhost:3000")
 @RestController
-@RequestMapping("api/login")
+@RequestMapping("api/user")
 public class LoginController {
 
     private final UserService userService;
@@ -21,8 +17,8 @@ public class LoginController {
         this.userService=userService;
     }
 
-    @PostMapping
-    public Role getUserRole(String email, String password){
-        return userService.getUserRole(email, password);
+    @GetMapping("/login")
+    public User getUserRole(@RequestParam(name = "email") String email, @RequestParam(name = "password") String password){
+        return userService.getUserLogin(email, password);
     }
 }

@@ -8,7 +8,7 @@ import java.util.Date;
 public class User implements Serializable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(nullable = false, updatable = false)
     private Long userId;
     @Column(nullable = false)
@@ -23,6 +23,7 @@ public class User implements Serializable {
     private String contact;
     @Enumerated(EnumType.STRING)
     private Role role;
+
 
     public User() {
     }
@@ -40,10 +41,6 @@ public class User implements Serializable {
 
     public Long getUserId() {
         return userId;
-    }
-
-    public void setUserId(Long userId) {
-        this.userId = userId;
     }
 
     public String getFirstName() {
@@ -80,6 +77,10 @@ public class User implements Serializable {
 
     public String getContact() {
         return contact;
+    }
+
+    public void setUserId(Long userId) {
+        this.userId = userId;
     }
 
     public void setContact(String contact) {
