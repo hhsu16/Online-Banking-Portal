@@ -5,6 +5,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,7 +15,8 @@ import web.api.services.ProspectService;
 import java.util.List;
 
 @Controller
-@RequestMapping("/user")
+@RequestMapping("/api/user")
+@CrossOrigin(origins = "http://localhost:3000")
 public class ProspectController {
     private final ProspectService prospectService;
 

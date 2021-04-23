@@ -1,13 +1,14 @@
 package web.api.models;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Date;
 
 @Entity(name="Users")
-public class User {
+public class User implements Serializable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(nullable = false, updatable = false)
     private Long userId;
     @Column(nullable = false)
@@ -22,6 +23,7 @@ public class User {
     private String contact;
     @Enumerated(EnumType.STRING)
     private Role role;
+
 
     public User() {
     }
@@ -39,10 +41,6 @@ public class User {
 
     public Long getUserId() {
         return userId;
-    }
-
-    public void setUserId(Long userId) {
-        this.userId = userId;
     }
 
     public String getFirstName() {
@@ -79,6 +77,10 @@ public class User {
 
     public String getContact() {
         return contact;
+    }
+
+    public void setUserId(Long userId) {
+        this.userId = userId;
     }
 
     public void setContact(String contact) {
