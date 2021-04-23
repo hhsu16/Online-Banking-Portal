@@ -1,10 +1,11 @@
 package web.api.models;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Date;
 
-@Entity(name="Transaction")
-public class Transaction {
+@Entity(name="Transactions")
+public class Transaction implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -17,21 +18,24 @@ public class Transaction {
     @Enumerated(EnumType.STRING)
     private TransactionType transactionType;//credit/debit
     private double transactionAmount;//>0
+    private TransactionStatus transactionStatus;
     @OneToOne
     private Account account;
-    //@Column(nullable = false)
+
+/*    @Column(nullable = false)
 //    private Long fromAccountId;//user can have checking an savings account.
 //    @Column(nullable = false)
-//    private Long toAccountId;// this facilitates transactions between self accounts.
-
+    private Long toAccountId;// this facilitates transactions between self accounts.
+*/
     public Transaction() {
     }
 
-    public Transaction(Date transactionDate, String description, TransactionType transactionType, double transactionAmount) {
+    public Transaction(Date transactionDate, String description, TransactionType transactionType, double transactionAmount, TransactionStatus transactionStatus) {
         this.transactionDate = transactionDate;
         this.description = description;
         this.transactionType = transactionType;
         this.transactionAmount = transactionAmount;
+        this.transactionStatus = transactionStatus;
     }
     public Long getTransactionId() {
         return transactionId;
@@ -73,20 +77,38 @@ public class Transaction {
         this.transactionAmount = transactionAmount;
     }
 
-//    public Long getFromAccountId() {
-//        return fromAccountId;
-//    }
-//
-//    public void setFromAccountId(Long fromAccountId) {
-//        this.fromAccountId = fromAccountId;
-//    }
-//
-//    public Long getToAccountId() {
-//        return toAccountId;
-//    }
-//
-//    public void setToAccountId (Long toAccountId) {
-//        this.toAccountId = toAccountId;
-//    }
+    public TransactionStatus getTransactionStatus() {
+        return transactionStatus;
+    }
+
+    public void setTransactionStatus(TransactionStatus transactionStatus) {
+        this.transactionStatus = transactionStatus;
+    }
+
+    public Account getAccount() {
+        return account;
+    }
+
+    public void setAccount(Account account) {
+        this.account = account;
+    }
+
+/*   public Long getFromAccountId() {
+        return fromAccountId;
+    }
+
+    public void setFromAccountId(Long fromAccountId) {
+       this.fromAccountId = fromAccountId;
+    }
+
+    public Long getToAccountId() {
+        return toAccountId;
+    }
+
+
+    public void setToAccountId (Long toAccountId) {
+        this.toAccountId = toAccountId;
+    }
+*/
 
 }
