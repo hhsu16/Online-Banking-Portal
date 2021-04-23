@@ -15,4 +15,6 @@ public interface AccountRepository extends JpaRepository<Account, Long> {
 
     public List<Account> findAccountsByAccountStatusEquals(boolean status);
 
+    public Account findAccountByAccountNoEquals(Long accountNo);
+
 }
