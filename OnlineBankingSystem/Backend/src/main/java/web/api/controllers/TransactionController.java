@@ -14,7 +14,7 @@ import web.api.services.TransactionService;
 import java.util.List;
 
 @Controller
-@RequestMapping("/api")
+@RequestMapping("/api/account")
 
 public class TransactionController
 {
@@ -27,7 +27,7 @@ public class TransactionController
         this.transactionService = transactionService;
     }
 
-    @PostMapping("/addTransactions")
+    /*@PostMapping("/addTransactions")
     public ResponseEntity<?> addTransaction(@RequestBody Transaction transaction) {
         int addObj = transactionService.addTransaction(transaction);
 
@@ -36,7 +36,7 @@ public class TransactionController
         } else {
             return ResponseEntity.badRequest().body("transaction failed");
         }
-    }
+    }*/
 
     @GetMapping("/showTransactions")
     public ResponseEntity<?> getTransactions(@RequestBody Account account)
