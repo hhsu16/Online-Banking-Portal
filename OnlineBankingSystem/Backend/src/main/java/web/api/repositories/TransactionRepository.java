@@ -12,9 +12,7 @@ import  java.util.List;
 @Repository
 public interface TransactionRepository extends JpaRepository<Transaction, Long>
 {
-//    @Query("select t from Transaction t,  Account a  where " +
-//            "(a.accountNo = t.fromAccountId or a.accountNo = t.toAccountId) " +
-//            " order by t.transactionDate desc")
+
     List<Transaction> findTransactionsByAccountEquals(Account account);
 
 }
