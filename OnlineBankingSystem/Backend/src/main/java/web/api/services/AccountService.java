@@ -27,7 +27,8 @@ public class AccountService {
         return accountRepository.findAccountsByUser_UserIdEquals(userId);
     }
 
-    public @Nullable Account getAccount(Long accountNo){
+    @Nullable
+    public Account getAccount(Long accountNo){
         return accountRepository.findAccountByAccountNoEquals(accountNo);
     }
 }

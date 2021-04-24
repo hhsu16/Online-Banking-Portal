@@ -18,24 +18,27 @@ public class Transaction implements Serializable {
     @Enumerated(EnumType.STRING)
     private TransactionType transactionType;//credit/debit
     private double transactionAmount;//>0
+    @Enumerated(EnumType.STRING)
     private TransactionStatus transactionStatus;
     @OneToOne
     private Account account;
 
-/*    @Column(nullable = false)
-//    private Long fromAccountId;//user can have checking an savings account.
-//    @Column(nullable = false)
-    private Long toAccountId;// this facilitates transactions between self accounts.
-*/
+    /*    @Column(nullable = false)
+          private Long fromAccountId;//user can have checking an savings account.
+          @Column(nullable = false)
+          private Long toAccountId;// this facilitates transactions between self accounts.
+    */
     public Transaction() {
     }
 
-    public Transaction(Date transactionDate, String description, TransactionType transactionType, double transactionAmount, TransactionStatus transactionStatus) {
+    public Transaction
+            (Date transactionDate, String description, TransactionType transactionType, double transactionAmount, TransactionStatus transactionStatus, Account account) {
         this.transactionDate = transactionDate;
         this.description = description;
         this.transactionType = transactionType;
         this.transactionAmount = transactionAmount;
         this.transactionStatus = transactionStatus;
+        this.account = account;
     }
     public Long getTransactionId() {
         return transactionId;
@@ -96,16 +99,12 @@ public class Transaction implements Serializable {
 /*   public Long getFromAccountId() {
         return fromAccountId;
     }
-
     public void setFromAccountId(Long fromAccountId) {
        this.fromAccountId = fromAccountId;
     }
-
     public Long getToAccountId() {
         return toAccountId;
     }
-
-
     public void setToAccountId (Long toAccountId) {
         this.toAccountId = toAccountId;
     }
