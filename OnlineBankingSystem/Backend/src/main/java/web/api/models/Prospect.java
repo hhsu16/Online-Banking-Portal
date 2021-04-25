@@ -1,5 +1,8 @@
 package web.api.models;
 
+import web.api.models.enums.AccountType;
+import web.api.models.enums.ProspectStatus;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
@@ -24,7 +27,8 @@ public class Prospect implements Serializable {
     @Column(nullable = false, length = 10)
     private String contact;
     private String address;
-    private boolean userStatus = false;
+    @Enumerated(EnumType.STRING)
+    private ProspectStatus prospectStatus;
     @Enumerated(EnumType.STRING)
     private AccountType accountTypeWanted;
 
@@ -33,7 +37,8 @@ public class Prospect implements Serializable {
 
     }
 
-    public Prospect(String firstName, String lastName, String emailId, String password, Date dateOfBirth, String contact, String address, AccountType accountTypeWanted) {
+    public Prospect
+            (String firstName, String lastName, String emailId, String password, Date dateOfBirth, String contact, String address, AccountType accountTypeWanted, ProspectStatus prospectStatus) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.emailId = emailId;
@@ -42,6 +47,7 @@ public class Prospect implements Serializable {
         this.contact = contact;
         this.address = address;
         this.accountTypeWanted = accountTypeWanted;
+        this.prospectStatus = prospectStatus;
     }
 
     public Long getProspectId() {
@@ -116,12 +122,12 @@ public class Prospect implements Serializable {
         this.address = address;
     }
 
-    public boolean isUserStatus() {
-        return userStatus;
+    public ProspectStatus getProspectStatus() {
+        return prospectStatus;
     }
 
-    public void setUserStatus(boolean userStatus) {
-        this.userStatus = userStatus;
+    public void setProspectStatus(ProspectStatus prospectStatus) {
+        this.prospectStatus = prospectStatus;
     }
 
     @Override

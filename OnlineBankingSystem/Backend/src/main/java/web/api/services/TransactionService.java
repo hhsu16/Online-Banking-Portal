@@ -1,6 +1,7 @@
 package web.api.services;
 
 
+import com.sun.istack.Nullable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import web.api.models.Account;
@@ -29,17 +30,6 @@ public class TransactionService
     {
 
         try {
-
-            //only debit
-//            Account fromAccount = accountRepository.findAccount(transaction.getFromAccountId());
-//            Account toAccount = accountRepository.findAccount(transaction.getToAccountId());
-//            if(fromAccount.getAccountBalance() - transaction.getTransactionAmount() < 0)  {
-//                return -1;
-//            }
-//            fromAccount.setAccountBalance(fromAccount.getAccountBalance() - transaction.getTransactionAmount());
-//            toAccount.setAccountBalance(toAccount.getAccountBalance() + transaction.getTransactionAmount());
-//            accountRepository.save(fromAccount);
-//            accountRepository.save(toAccount);
             transactionRepository.save(transaction);
             System.out.println("Transaction succeeded");
             return 1;
@@ -54,6 +44,18 @@ public class TransactionService
      {
         List<Transaction> allTransactions = transactionRepository.findTransactionsByAccountEquals(account);
         return allTransactions;
+    }
+
+    public @Nullable Long getLatestTransactionId(){
+        Long l;
+       Transaction latestTran = transactionRepository.findTopByOrderByTransactionId();
+       if(latestTran==null){
+           l = new Long(100000);
+       }
+       else{
+           l = latestTran.getTransactionId();
+       }
+       return l;
     }
 
 }

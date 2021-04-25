@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import web.api.exceptions.UserNotFoundException;
 import web.api.models.Prospect;
+import web.api.models.enums.ProspectStatus;
 import web.api.repositories.ProspectRepository;
 
 import java.util.List;
@@ -20,18 +21,19 @@ public class ProspectService {
 
     public List<Prospect> getProspects()
     {
-        return prospectRepository.findAllByUserStatusEquals(false);
+        return prospectRepository.findAllByProspectStatusEquals(ProspectStatus.PendingApproval);
     }
 
     public Prospect addProspect(Prospect prospectObj)
     {
+        prospectObj.setProspectStatus(ProspectStatus.PendingApproval);
         return prospectRepository.save(prospectObj);
     }
 
-    public void updateProspectStatus(boolean status, String emailId, String contact){
-        Prospect p = prospectRepository.findProspectsByUserStatusEqualsAndEmailIdEqualsAndContactEquals(status, emailId, contact)
-        .orElseThrow(()->new UserNotFoundException("Prospect not found with username : "+emailId));
-        p.setUserStatus(true);
-        prospectRepository.save(p);
+    public Prospect updateProspectStatus(ProspectStatus prospectStatus, String email){
+        Prospect getProspect = prospectRepository.findProspectByProspectStatusEqualsAndEmailId(prospectStatus, email);
+        getProspect.setProspectStatus(ProspectStatus.Active);
+        return prospectRepository.save(getProspect);
     }
+
 }

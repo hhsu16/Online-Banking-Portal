@@ -2,7 +2,7 @@ package web.api.models;
 
 
 
-import org.springframework.boot.context.properties.bind.DefaultValue;
+import web.api.models.enums.AccountType;
 
 import javax.persistence.*;
 import java.io.Serializable;
