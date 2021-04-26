@@ -2,7 +2,7 @@ package web.api.models;
 
 
 
-import org.springframework.boot.context.properties.bind.DefaultValue;
+import web.api.models.enums.AccountType;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -19,7 +19,7 @@ public class Account implements Serializable {
     private AccountType accountType;
     private double accountBalance;
 
-    @OneToOne
+    @ManyToOne
     private User user;
 
     public Account(){

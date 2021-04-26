@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import web.api.models.Account;
 import web.api.models.Transaction;
 import web.api.models.User;
+import web.api.services.AccountService;
 import web.api.services.TransactionService;
 
 import java.util.List;
@@ -20,31 +21,24 @@ public class TransactionController
 {
 
     private final TransactionService transactionService;
+    private final AccountService accountService;
 
     @Autowired
-    public TransactionController(TransactionService transactionService)
+    public TransactionController(TransactionService transactionService, AccountService accountService)
     {
         this.transactionService = transactionService;
+        this.accountService = accountService;
     }
 
-    /*@PostMapping("/addTransactions")
-    public ResponseEntity<?> addTransaction(@RequestBody Transaction transaction) {
-        int addObj = transactionService.addTransaction(transaction);
-
-        if (addObj == 1) {
-            return ResponseEntity.ok().body("transaction created");
-        } else {
-            return ResponseEntity.badRequest().body("transaction failed");
-        }
-    }*/
 
     @GetMapping("/showTransactions")
-    public ResponseEntity<?> getTransactions(@RequestBody Account account)
+    public ResponseEntity<?> getTransactions(@RequestParam("accountNo") Long accountNo)
     {
 
+        Account account = accountService.getAccount(accountNo);
 
         List<Transaction> transactions= transactionService.getTransaction(account);
-        return ResponseEntity.ok().body(transactions.toString());
+        return ResponseEntity.ok().body(transactions);
     }
 
 

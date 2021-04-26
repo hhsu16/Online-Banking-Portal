@@ -1,5 +1,8 @@
 package web.api.models;
 
+import web.api.models.enums.TransactionStatus;
+import web.api.models.enums.TransactionType;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
@@ -10,29 +13,27 @@ public class Transaction implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(nullable = false, updatable = false)
-    private Long transactionId; //unique id for every transaction. auto incremented
+    private Long tId;
+    @Column(nullable = false, updatable = false)
+    private Long transactionId;
     @Column(nullable = false)
-    private Date transactionDate;//date of transaction.
-    private String description;//optional.
+    private Date transactionDate;
+    private String description;
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
-    private TransactionType transactionType;//credit/debit
-    private double transactionAmount;//>0
+    private TransactionType transactionType;
+    private double transactionAmount;
     @Enumerated(EnumType.STRING)
     private TransactionStatus transactionStatus;
-    @OneToOne
+    @ManyToOne
     private Account account;
 
-    /*    @Column(nullable = false)
-          private Long fromAccountId;//user can have checking an savings account.
-          @Column(nullable = false)
-          private Long toAccountId;// this facilitates transactions between self accounts.
-    */
     public Transaction() {
     }
 
     public Transaction
-            (Date transactionDate, String description, TransactionType transactionType, double transactionAmount, TransactionStatus transactionStatus, Account account) {
+            (Long transactionId, Date transactionDate, String description, TransactionType transactionType, double transactionAmount, TransactionStatus transactionStatus, Account account) {
+        this.transactionId = transactionId;
         this.transactionDate = transactionDate;
         this.description = description;
         this.transactionType = transactionType;
@@ -96,18 +97,12 @@ public class Transaction implements Serializable {
         this.account = account;
     }
 
-/*   public Long getFromAccountId() {
-        return fromAccountId;
+    public Long gettId() {
+        return tId;
     }
-    public void setFromAccountId(Long fromAccountId) {
-       this.fromAccountId = fromAccountId;
-    }
-    public Long getToAccountId() {
-        return toAccountId;
-    }
-    public void setToAccountId (Long toAccountId) {
-        this.toAccountId = toAccountId;
-    }
-*/
 
+    public void settId(Long tId) {
+        this.tId = tId;
+    }
 }
+

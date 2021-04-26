@@ -15,5 +15,7 @@ public interface TransactionRepository extends JpaRepository<Transaction, Long>
 
     List<Transaction> findTransactionsByAccountEquals(Account account);
 
+    Transaction findTopByOrderByTransactionId();
+
 }
 

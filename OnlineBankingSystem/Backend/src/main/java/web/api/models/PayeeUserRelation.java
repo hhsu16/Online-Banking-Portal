@@ -10,9 +10,9 @@ public class PayeeUserRelation implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(nullable = false, updatable = false)
     private Long relationId;
-    @OneToOne
+    @ManyToOne
     private User user;
-    @OneToOne
+    @ManyToOne
     private Payee payee;
 
 

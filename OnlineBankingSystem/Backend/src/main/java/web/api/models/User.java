@@ -1,5 +1,9 @@
 package web.api.models;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import web.api.models.enums.UserRole;
+import web.api.models.enums.UserStatus;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
@@ -22,13 +26,15 @@ public class User implements Serializable {
     @Column(nullable = false, unique = true, length = 10)
     private String contact;
     @Enumerated(EnumType.STRING)
-    private Role role;
+    private UserRole role;
+    @Enumerated(EnumType.STRING)
+    private UserStatus userStatus;
 
 
     public User() {
     }
 
-    public User(String firstName, String lastName, String emailId, String password, Date dateOfBirth, String address, String contact, Role role) {
+    public User(String firstName, String lastName, String emailId, String password, Date dateOfBirth, String address, String contact, UserRole role, UserStatus userStatus) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.emailId = emailId;
@@ -37,6 +43,7 @@ public class User implements Serializable {
         this.address = address;
         this.contact = contact;
         this.role = role;
+        this.userStatus = userStatus;
     }
 
     public Long getUserId() {
@@ -87,11 +94,11 @@ public class User implements Serializable {
         this.contact = contact;
     }
 
-    public Role getRole() {
+    public UserRole getRole() {
         return role;
     }
 
-    public void setRole(Role role) {
+    public void setRole(UserRole role) {
         this.role = role;
     }
 
@@ -109,6 +116,14 @@ public class User implements Serializable {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public UserStatus getUserStatus() {
+        return userStatus;
+    }
+
+    public void setUserStatus(UserStatus userStatus) {
+        this.userStatus = userStatus;
     }
 
     @Override

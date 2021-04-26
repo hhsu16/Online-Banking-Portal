@@ -1,4 +1,4 @@
-package web.api.models;
+package web.api.models.enums;
 
 public enum TransactionStatus {
     SUCCESS, FAILED

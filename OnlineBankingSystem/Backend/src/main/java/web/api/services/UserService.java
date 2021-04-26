@@ -5,8 +5,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import web.api.exceptions.UserNotFoundException;
 import web.api.models.Prospect;
-import web.api.models.Role;
+import web.api.models.enums.UserRole;
 import web.api.models.User;
+import web.api.models.enums.UserStatus;
 import web.api.repositories.UserRepository;
 
 import java.util.List;
@@ -31,13 +32,14 @@ public class UserService {
                 prospect.getDateOfBirth(),
                 prospect.getAddress(),
                 prospect.getContact(),
-                Role.CUSTOMER);
+                UserRole.Customer,
+                UserStatus.ACTIVE);
         return userRepository.save(newUser);
 
     }
 
     public List<User> getCustomers(){
-        return userRepository.findUsersByRoleEquals(Role.CUSTOMER);
+        return userRepository.findUsersByRoleEquals(UserRole.Customer);
     }
 
     public User getUserLogin(String emailId, String userPassword){
