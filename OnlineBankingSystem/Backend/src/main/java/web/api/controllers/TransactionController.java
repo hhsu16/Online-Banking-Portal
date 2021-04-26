@@ -34,7 +34,9 @@ public class TransactionController
     @GetMapping("/showTransactions")
     public ResponseEntity<?> getTransactions(@RequestParam("accountNo") Long accountNo)
     {
+
         Account account = accountService.getAccount(accountNo);
+
         List<Transaction> transactions= transactionService.getTransaction(account);
         return ResponseEntity.ok().body(transactions);
     }
