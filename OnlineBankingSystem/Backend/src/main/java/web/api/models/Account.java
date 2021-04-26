@@ -19,7 +19,7 @@ public class Account implements Serializable {
     private AccountType accountType;
     private double accountBalance;
 
-    @OneToOne
+    @ManyToOne
     private User user;
 
     public Account(){

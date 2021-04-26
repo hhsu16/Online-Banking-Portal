@@ -25,7 +25,7 @@ public class Transaction implements Serializable {
     private double transactionAmount;
     @Enumerated(EnumType.STRING)
     private TransactionStatus transactionStatus;
-    @OneToOne
+    @ManyToOne
     private Account account;
 
     public Transaction() {
