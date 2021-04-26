@@ -1,5 +1,6 @@
 package web.api.models;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import web.api.models.enums.UserRole;
 import web.api.models.enums.UserStatus;
 
