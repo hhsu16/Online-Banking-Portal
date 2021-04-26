@@ -41,6 +41,8 @@ public class TransactionController
     @GetMapping("/showTransactions")
     public ResponseEntity<?> getTransactions(@RequestBody Account account)
     {
+
+
         List<Transaction> transactions= transactionService.getTransaction(account);
         return ResponseEntity.ok().body(transactions.toString());
     }

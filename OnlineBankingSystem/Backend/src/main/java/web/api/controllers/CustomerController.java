@@ -5,12 +5,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-import web.api.models.Payee;
-import web.api.models.PayeeUserRelation;
-import web.api.models.User;
-import web.api.services.PayeeService;
-import web.api.services.PayeeUserRelationService;
-import web.api.services.UserService;
+import web.api.models.*;
+import web.api.services.*;
 
 import java.util.List;
 
@@ -21,13 +17,17 @@ public class CustomerController {
 
     private final PayeeUserRelationService payeeUserRelationService;
     private final PayeeService payeeService;
+    private final BillerUserRelationService billerUserRelationService;
+    private final BillerService billerService;
     private final UserService userService;
 
     @Autowired
-    public CustomerController(PayeeUserRelationService payeeUserRelationService, PayeeService payeeService, UserService userService){
+    public CustomerController(PayeeUserRelationService payeeUserRelationService, PayeeService payeeService, UserService userService, BillerUserRelationService billerUserRelationService, BillerService billerService){
         this.payeeUserRelationService = payeeUserRelationService;
         this.payeeService = payeeService;
         this.userService = userService;
+        this.billerUserRelationService = billerUserRelationService;
+        this.billerService = billerService;
     }
 
     @GetMapping("/viewPayees")
@@ -37,6 +37,20 @@ public class CustomerController {
 
         if(userPayees.size()>0){
             return new ResponseEntity<>(userPayees, HttpStatus.OK);
+        }
+        else{
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+
+    @GetMapping("/viewBillers")
+    public ResponseEntity<List<Biller>> viewUserBillers(@RequestParam("userId") Long userId){
+        User requestedUser = userService.getUserFromUserId(userId);
+        List<Biller> userBillers =  billerUserRelationService.getUserBillers(requestedUser);
+
+        if(userBillers.size()>0){
+            return new ResponseEntity<>(userBillers, HttpStatus.OK);
         }
         else{
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
@@ -62,5 +76,4 @@ public class CustomerController {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-
 }

@@ -13,6 +13,7 @@ import web.api.exceptions.InsufficientFundsException;
 import web.api.models.*;
 import web.api.repositories.AccountRepository;
 import web.api.services.AccountService;
+import web.api.services.BillerService;
 import web.api.services.PayeeService;
 import web.api.services.TransactionService;
 
@@ -25,20 +26,44 @@ public class AccountController {
 
     private final AccountService accountService;
     private final PayeeService payeeService;
+    private final BillerService billerService;
     private final AccountRepository accountRepository;
     private final TransactionService transactionService;
 
     @Autowired
     public AccountController
-            (AccountService accountService, PayeeService payeeService, AccountRepository accountRepository, TransactionService transactionService){
+            (AccountService accountService, PayeeService payeeService, AccountRepository accountRepository, TransactionService transactionService, BillerService billerService){
         this.accountService = accountService;
         this.payeeService = payeeService;
         this.accountRepository = accountRepository;
         this.transactionService = transactionService;
+        this.billerService = billerService;
     }
 
     public Account createAccount(Account newAccount){
         return accountService.addNewAccount(newAccount);
+    }
+
+    @GetMapping("/billPayment")
+    public ResponseEntity billPayment
+            (@RequestParam("accountNo") Long accountNo,@RequestParam("billerId") Long billerId,@RequestParam("amount") double amount) throws InsufficientFundsException{
+        Account userAccount = accountService.getAccount(accountNo);
+        Biller billerObj = billerService.fetchBiller(billerId);
+        Account billerAccount = accountService.getAccount(billerObj.getBillerAccount());
+        if(amount<=userAccount.getAccountBalance()){
+            Date date = new Date();
+            String message = "Amount transfer of $"+amount+" from "+userAccount.getUser().getFirstName()+" to "+billerObj.getBillerName();
+            userAccount.setAccountBalance(userAccount.getAccountBalance()-amount);
+            accountRepository.save(userAccount);
+
+            transactionService.addTransaction(
+                    new Transaction(date, message, TransactionType.DEBIT, amount, TransactionStatus.SUCCESS, userAccount));
+
+            return new ResponseEntity(HttpStatus.OK);
+        }
+        else{
+            throw new InsufficientFundsException("Insufficient Funds");
+        }
     }
 
     @GetMapping("/fundTransfer")
