@@ -49,20 +49,12 @@ public class AccountController {
     @GetMapping("/billPayment")
     public ResponseEntity billPayment
             (@RequestParam("accountNo") Long accountNo,@RequestParam("billerId") Long billerId,@RequestParam("amount") double amount) throws InsufficientFundsException{
-        Account userAccount = accountService.getAccount(accountNo);
-        Biller billerObj = billerService.fetchBiller(billerId);
-        Account billerAccount = accountService.getAccount(billerObj.getBillerAccount());
-        if(amount<=userAccount.getAccountBalance()){
-            Date date = new Date();
-            String message = "Amount transfer of $"+amount+" to" +billerObj.getBillerName();
-            userAccount.setAccountBalance(userAccount.getAccountBalance()-amount);
-            accountRepository.save(userAccount);
-
-            
-            return new ResponseEntity(HttpStatus.OK);
+        int status = accountService.transferFundsToPayees(accountNo, billerId, amount);
+        if(status == 1){
+            return new ResponseEntity(HttpStatus.ACCEPTED);
         }
         else{
-            throw new InsufficientFundsException("Insufficient Funds");
+            return new ResponseEntity(HttpStatus.BAD_REQUEST);
         }
     }
 
