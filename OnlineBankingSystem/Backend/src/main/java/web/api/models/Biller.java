@@ -3,7 +3,7 @@ package web.api.models;
 import javax.persistence.*;
 import java.io.Serializable;
 
-@Entity(name = "Biller")
+@Entity(name = "Billers")
 public class Biller implements Serializable {
 
     @Id
