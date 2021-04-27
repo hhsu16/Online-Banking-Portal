@@ -1,7 +1,6 @@
 package web.api.repositories;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 import web.api.models.Account;
 import web.api.models.Transaction;

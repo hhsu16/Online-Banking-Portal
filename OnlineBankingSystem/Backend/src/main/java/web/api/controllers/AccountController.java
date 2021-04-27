@@ -27,19 +27,11 @@ import java.util.Date;
 public class AccountController {
 
     private final AccountService accountService;
-    private final PayeeService payeeService;
-    private final BillerService billerService;
-    private final AccountRepository accountRepository;
-    private final TransactionService transactionService;
 
     @Autowired
     public AccountController
-            (AccountService accountService, PayeeService payeeService, AccountRepository accountRepository, TransactionService transactionService, BillerService billerService){
+            (AccountService accountService){
         this.accountService = accountService;
-        this.payeeService = payeeService;
-        this.accountRepository = accountRepository;
-        this.transactionService = transactionService;
-        this.billerService = billerService;
     }
 
     public Account createAccount(Account newAccount){
@@ -49,7 +41,7 @@ public class AccountController {
     @GetMapping("/billPayment")
     public ResponseEntity billPayment
             (@RequestParam("accountNo") Long accountNo,@RequestParam("billerId") Long billerId,@RequestParam("amount") double amount) throws InsufficientFundsException{
-        int status = accountService.transferFundsToPayees(accountNo, billerId, amount);
+        int status = accountService.billPaymentToBillers(accountNo, billerId, amount);
         if(status == 1){
             return new ResponseEntity(HttpStatus.ACCEPTED);
         }
@@ -76,6 +68,17 @@ public class AccountController {
             (@RequestParam("accountNo") Long accountNo, @RequestParam("payeeId") Long payeeId, @RequestParam("transferDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate transferDate, @RequestParam("transferAmount") double transferAmount){
         try{
             accountService.saveRecurringTransferRequest(accountNo, payeeId, transferDate, transferAmount);
+            return new ResponseEntity(HttpStatus.ACCEPTED);
+        }
+        catch(Exception ex){
+            return new ResponseEntity(HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @PostMapping("/recurringPayment")
+    public ResponseEntity setUpRecurringPayment(@RequestParam("accountNo") Long accountNo, @RequestParam("billerId") Long billerId, @RequestParam("paymentDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate paymentDate, @RequestParam("paymentAmount") double paymentAmount){
+        try{
+            accountService.saveRecurringPaymentRequest(accountNo, billerId, paymentDate, paymentAmount);
             return new ResponseEntity(HttpStatus.ACCEPTED);
         }
         catch(Exception ex){

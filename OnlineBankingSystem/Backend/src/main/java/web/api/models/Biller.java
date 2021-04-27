@@ -10,8 +10,8 @@ public class Biller implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(updatable = false, nullable = false)
     private Long billerId;
-    @Column(nullable = false)
-    private Long billerAccount;
+    @ManyToOne
+    private Account billerAccount;
     @Column(nullable = false)
     private String billerName;
     @Column(nullable = false)
@@ -23,7 +23,7 @@ public class Biller implements Serializable {
 
     }
 
-    public Biller(Long billerAccount, String billerName, String billerEmailId, String billerContactNo) {
+    public Biller(Account billerAccount, String billerName, String billerEmailId, String billerContactNo) {
         this.billerAccount = billerAccount;
         this.billerName = billerName;
         this.billerEmailId = billerEmailId;
@@ -38,11 +38,11 @@ public class Biller implements Serializable {
         this.billerId = billerId;
     }
 
-    public Long getBillerAccount() {
+    public Account getBillerAccount() {
         return billerAccount;
     }
 
-    public void setBillerAccount(Long billerAccount) {
+    public void setBillerAccount(Account billerAccount) {
         this.billerAccount = billerAccount;
     }
 

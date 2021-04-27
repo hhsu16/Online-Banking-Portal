@@ -17,16 +17,14 @@ public class CustomerController {
 
     private final PayeeUserRelationService payeeUserRelationService;
     private final PayeeService payeeService;
-    private final BillerUserRelationService billerUserRelationService;
     private final BillerService billerService;
     private final UserService userService;
 
     @Autowired
-    public CustomerController(PayeeUserRelationService payeeUserRelationService, PayeeService payeeService, UserService userService, BillerUserRelationService billerUserRelationService, BillerService billerService){
+    public CustomerController(PayeeUserRelationService payeeUserRelationService, PayeeService payeeService, UserService userService, BillerService billerService){
         this.payeeUserRelationService = payeeUserRelationService;
         this.payeeService = payeeService;
         this.userService = userService;
-        this.billerUserRelationService = billerUserRelationService;
         this.billerService = billerService;
     }
 
@@ -47,7 +45,7 @@ public class CustomerController {
     @GetMapping("/viewBillers")
     public ResponseEntity<List<Biller>> viewUserBillers(@RequestParam("userId") Long userId){
         User requestedUser = userService.getUserFromUserId(userId);
-        List<Biller> userBillers =  billerUserRelationService.getUserBillers(requestedUser);
+        List<Biller> userBillers = billerService.getAllBillers();
 
         if(userBillers.size()>0){
             return new ResponseEntity<>(userBillers, HttpStatus.OK);
