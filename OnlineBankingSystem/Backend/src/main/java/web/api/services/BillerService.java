@@ -2,8 +2,11 @@ package web.api.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.w3c.dom.stylesheets.LinkStyle;
 import web.api.models.Biller;
 import web.api.repositories.BillerRepository;
+
+import java.util.List;
 
 @Service
 public class BillerService {
@@ -21,6 +24,10 @@ public class BillerService {
             p = billerRepository.save(newBiller);
         }
         return p;
+    }
+
+    public List<Biller> getAllBillers(){
+        return billerRepository.findAll();
     }
 
     public Biller fetchBiller(Long billerId){

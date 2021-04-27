@@ -8,6 +8,7 @@ import web.api.models.*;
 import web.api.models.enums.TransactionStatus;
 import web.api.models.enums.TransactionType;
 import web.api.repositories.AccountRepository;
+import web.api.repositories.RecurringPaymentRepository;
 import web.api.repositories.RecurringTransferRepository;
 import web.api.repositories.TransactionRepository;
 
@@ -25,14 +26,16 @@ public class AccountService {
     private final BillerService billerService;
     private final TransactionService transactionService;
     private final RecurringTransferRepository recurringTransferRepository;
+    private final RecurringPaymentRepository recurringPaymentRepository;
 
     @Autowired
-    public AccountService(RecurringTransferRepository recurringTransferRepository, AccountRepository accountRepository, PayeeService payeeService, TransactionService transactionService, TransactionRepository transactionRepository, BillerService billerService){
+    public AccountService(RecurringPaymentRepository recurringPaymentRepository, RecurringTransferRepository recurringTransferRepository, AccountRepository accountRepository, PayeeService payeeService, TransactionService transactionService, TransactionRepository transactionRepository, BillerService billerService){
         this.accountRepository = accountRepository;
         this.payeeService = payeeService;
         this.transactionService = transactionService;
         this.transactionRepository = transactionRepository;
         this.recurringTransferRepository = recurringTransferRepository;
+        this.recurringPaymentRepository = recurringPaymentRepository;
         this.billerService = billerService;
     }
 
@@ -48,6 +51,13 @@ public class AccountService {
         Account account = accountRepository.findAccountByAccountNoEquals(accountNo);
         Payee payee = payeeService.fetchPayee(payeeId);
         recurringTransferRepository.save(new RecurringTransfer(account, payee, transferDate, transferAmount,LocalDateTime.now(), LocalDateTime.now()));
+    }
+
+    public void saveRecurringPaymentRequest(Long accountNo, Long billerId, LocalDate paymentDate, double paymentAmount){
+        Account account = accountRepository.findAccountByAccountNoEquals(accountNo);
+        Biller biller = billerService.fetchBiller(billerId);
+        recurringPaymentRepository.save(new RecurringPayment(account, biller, paymentDate, paymentAmount, LocalDateTime.now(), LocalDateTime.now()));
+
     }
 
     @Nullable
@@ -83,27 +93,23 @@ public class AccountService {
         return result;
     }
 
-    public int transferFundsToBillers(Long accountNo, Long billerId, double transferAmount) throws InsufficientFundsException {
+    public int billPaymentToBillers(Long accountNo, Long billerId, double paymentAmount) throws InsufficientFundsException {
         int result = 0;
         Account userAccount = getAccount(accountNo);
-        Biller billerObj = billerService.fetchBiller(billerId);
-        Account billerAccount = getAccount(billerObj.getBillerAccount());
-        if(transferAmount <= userAccount.getAccountBalance()){
-            if(billerAccount!=null){
+        Biller biller = billerService.fetchBiller(billerId);
+        Account billerAccount = getAccount(biller.getBillerAccount().getAccountNo());
+        if(paymentAmount <= userAccount.getAccountBalance()){
             Long transactId = transactionService.getLatestTransactionId();
             transactId++;
-            String message = "Amount transfer of $"+transferAmount+" to "+billerObj.getBillerName();
-            userAccount.setAccountBalance(userAccount.getAccountBalance()-transferAmount);
+            String message = "Bill payment of $"+paymentAmount+" from"+userAccount.getUser().getFirstName()+" to "+biller.getBillerName();
+            userAccount.setAccountBalance(userAccount.getAccountBalance()-paymentAmount);
             accountRepository.save(userAccount);
-            transactionService.addTransaction(new Transaction(transactId, new Date(), message, TransactionType.DEBIT, transferAmount, TransactionStatus.SUCCESS, userAccount));
-            //if(billerAccount!=null){
-                billerAccount.setAccountBalance(billerAccount.getAccountBalance()+transferAmount);
-                accountRepository.save(billerAccount);
-                transactionService.addTransaction(
-                        new Transaction(transactId, new Date(), message, TransactionType.CREDIT, transferAmount, TransactionStatus.SUCCESS, billerAccount));
-            }
+            transactionService.addTransaction(new Transaction(transactId, new Date(), message, TransactionType.DEBIT, paymentAmount, TransactionStatus.SUCCESS, userAccount));
+            billerAccount.setAccountBalance(billerAccount.getAccountBalance()+paymentAmount);
+            accountRepository.save(billerAccount);
+            String billerMessage = "Bill payment of $"+paymentAmount+" received from "+userAccount.getUser().getFirstName();
+            transactionService.addTransaction(new Transaction(transactId, new Date(), billerMessage, TransactionType.CREDIT, paymentAmount, TransactionStatus.SUCCESS, billerAccount));
             result = 1;
-
         }
         else{
             result = -99;
