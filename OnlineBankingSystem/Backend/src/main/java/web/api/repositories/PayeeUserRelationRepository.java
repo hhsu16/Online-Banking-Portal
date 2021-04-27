@@ -1,10 +1,7 @@
 package web.api.repositories;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
-import web.api.models.Payee;
 import web.api.models.PayeeUserRelation;
 import web.api.models.User;
 
