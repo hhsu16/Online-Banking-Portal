@@ -19,13 +19,26 @@ public class CustomerController {
     private final PayeeService payeeService;
     private final BillerService billerService;
     private final UserService userService;
+    private final AccountService accountService;
 
     @Autowired
-    public CustomerController(PayeeUserRelationService payeeUserRelationService, PayeeService payeeService, UserService userService, BillerService billerService){
+    public CustomerController(AccountService accountService, PayeeUserRelationService payeeUserRelationService, PayeeService payeeService, UserService userService, BillerService billerService){
         this.payeeUserRelationService = payeeUserRelationService;
         this.payeeService = payeeService;
         this.userService = userService;
         this.billerService = billerService;
+        this.accountService = accountService;
+    }
+
+    @GetMapping("/viewAccounts")
+    public ResponseEntity<List<Account>> viewUserAccounts(@RequestParam("userId") Long userId){
+        List<Account> userAccounts = accountService.getUserAccounts(userId);
+        if(userAccounts.size()>0){
+            return new ResponseEntity<>(userAccounts, HttpStatus.OK);
+        }
+        else{
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
     @GetMapping("/viewPayees")
