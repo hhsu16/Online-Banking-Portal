@@ -1,0 +1,24 @@
+
+
+SignUp - Customer details ->Prospect table ->Users ->Account 
+Login - email, password
+	-> Customer Dashboard
+		->View User Accounts
+		->View User Accounts Balances
+		->View recent transactions(past 10)
+		->Fund Transfer
+			->Add Payee
+			->Delete Payee(x)
+			->Update Payee(x)
+			->One time fund transfer
+			->Recurring fund transfer
+		-> Bill Payment
+			->One time bill payment
+			->Recurring bill payment
+		-> View Transactions
+			->View upto past 18 months transactions
+	-> Admin Dashboard
+		-> View Prospects and approve prospects.
+		-> View Customers.
+			-> Add fee to the customer accounts.(x)
+->Logout

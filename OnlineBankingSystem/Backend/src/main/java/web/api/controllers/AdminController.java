@@ -37,12 +37,15 @@ public class AdminController {
     }
 
     @PostMapping("/addNewCustomer")
-    public ResponseEntity<Account> openOnlineBankingAccount(@RequestBody Prospect prospect){
+    public ResponseEntity<Account> openOnlineBankingAccount(@RequestParam("prospectId") Long prospectId){
         Account newAccount = null;
-        User isUserCreated = userService.addUser(prospect);
-        if(isUserCreated != null){
-            prospectService.updateProspectStatus(prospect.getProspectStatus(), prospect.getEmailId());
-            newAccount = accountController.createAccount(new Account(isUserCreated, true, prospect.getAccountTypeWanted(), 0.0));
+        Prospect prospect = prospectService.findProspectById(prospectId);
+        if(prospect!=null){
+            User isUserCreated = userService.addUser(prospect);
+            if(isUserCreated != null){
+                prospectService.updateProspectStatus(prospect.getProspectStatus(), prospect.getEmailId());
+                newAccount = accountController.createAccount(new Account(isUserCreated, true, prospect.getAccountTypeWanted(), 0.0));
+            }
         }
 
         return new ResponseEntity<>(newAccount, HttpStatus.CREATED);

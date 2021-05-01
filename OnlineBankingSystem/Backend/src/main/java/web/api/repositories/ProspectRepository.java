@@ -17,4 +17,6 @@ public interface ProspectRepository extends JpaRepository<Prospect,Long> {
 
     Prospect findProspectByProspectStatusEqualsAndEmailId(ProspectStatus status, String email);
 
+    Prospect findProspectByProspectId(Long prospectId);
+
 }

@@ -1,0 +1,51 @@
+************************ Users ***************************
+
+INSERT INTO users(address, contact, date_of_birth, email_id, first_name, last_name, password, role, user_status) VALUES
+('360 San Jose', '9959911369', '1994-10-01', 'chvamsi@gmail.com','Vamsi Srinivas','C','login','Customer','Inactive');
+INSERT INTO users(address, contact, date_of_birth, email_id, first_name, last_name, password, role, user_status) VALUES
+('361 San Jose', '9959911370', '1985-11-05', 'vamsi@gmail.com','Srinivas','C','login','Customer','Inactive');
+INSERT INTO users(address, contact, date_of_birth, email_id, first_name, last_name, password, role, user_status) VALUES
+('360 San Jose', '9959911371', '1994-10-01', 'chv@gmail.com','Vamsi','C','login','Customer','Inactive');
+
+SignUp : 
+	->URL : http://localhost:8080/api/user/signup
+	->Request Body : {
+    			"accountTypeWanted" : "SAVING",
+    			"address" : "180 Alicante Dr",
+    			"contact" : "8889997771",
+    			"dateOfBirth" : "1994-10-23",
+    			"emailId" : "user123@gmail.com",
+    			"firstName" : "Manoj",
+    			"lastName" : "G",
+    			"password" : "Login@0110"
+		}
+Login : 
+	->URL : http://localhost:8080/api/user/login?email=user123@gmail.com&password=Login@0110
+
+View Accounts : 
+	->URL : http://localhost:8080/api/customer/viewAccounts?userId=4
+
+AddNewCustomer : 
+	->URL : http://localhost:8080/api/admin/addNewCustomer?prospectId=1
+
+RegisterPayee : 
+	->URL : http://localhost:8080/api/customer/registerPayee?userId=2
+	->Request Body : {
+					"payeeAccount" : 12345,
+					"payeeName" : "Gowtham",
+					"payeeEmailId" : "gowtham@gmail.com",
+					"payeeContactNo" : "4085496780"
+				  }
+View User Payees :
+	->URL : http://localhost:8080/api/customer/viewPayees?userId=4
+
+One Time fund transfer :
+	->URL : http://localhost:8080/api/account/fundTransfer?accountNo=1&payeeId=2&amount=10
+
+RecurringTransfer :
+	-> URL : http://localhost:8080/api/account/recurringTransfer
+accountNo=1&payeeId=1&transferDate=2021%2D04%2D26&transferAmount=1
+
+    
+View User Transactions :
+	-> URL : http://localhost:8080/api/account/showTransactions?accountNo=2
