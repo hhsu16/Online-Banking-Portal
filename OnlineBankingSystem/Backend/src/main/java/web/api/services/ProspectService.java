@@ -8,6 +8,7 @@ import web.api.models.enums.ProspectStatus;
 import web.api.repositories.ProspectRepository;
 
 import java.util.List;
+import java.util.Optional;
 
 
 @Service
@@ -22,6 +23,10 @@ public class ProspectService {
     public List<Prospect> getProspects()
     {
         return prospectRepository.findAllByProspectStatusEquals(ProspectStatus.PendingApproval);
+    }
+
+    public Prospect findProspectById(Long prospectId){
+        return prospectRepository.findProspectByProspectId(prospectId);
     }
 
     public Prospect addProspect(Prospect prospectObj)
