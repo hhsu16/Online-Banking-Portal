@@ -4,6 +4,7 @@ import Input from "react-validation/build/input";
 import CheckButton from "react-validation/build/button";
 import { isEmail, isMobilePhone } from "validator";
 import DatePicker from "react-date-picker";
+import { format } from "date-fns";
 
 import AuthService from "../services/auth";
 
@@ -68,8 +69,7 @@ export default class Register extends Component {
     this.onChangeConfirmPassword = this.onChangeConfirmPassword.bind(this);
     this.onChangeDateOfBirth = this.onChangeDateOfBirth.bind(this);
     this.onChangeAddress = this.onChangeAddress.bind(this);
-    this.onChangeZip = this.onChangeZip.bind(this);
-    this.onChangeCountry = this.onChangeCountry.bind(this);
+    this.onChangeAccount = this.onChangeAccount.bind(this);
     this.onChangeTel = this.onChangeTel.bind(this);
 
     this.state = {
@@ -82,28 +82,22 @@ export default class Register extends Component {
       tel: "",
       address: "",
 
-      countryOptions: [
+      accountOptions: [
         {
           name: "Select…",
           value: null,
         },
         {
-          name: "United State",
-          value: "United State",
+          name: "CHECKING",
+          value: "CHECKING",
         },
         {
-          name: "China",
-          value: "China",
-        },
-        {
-          name: "India",
-          value: "India",
+          name: "SAVING",
+          value: "SAVING",
         },
       ],
-      countryValue: "?",
+      accountValue: "?",
 
-      zip: "",
-      ssn: "",
       successful: false,
       message: "",
     };
@@ -150,11 +144,6 @@ export default class Register extends Component {
       address: e.target.value,
     });
   }
-  onChangeZip(e) {
-    this.setState({
-      zip: e.target.value,
-    });
-  }
 
   onChangeTel(e) {
     this.setState({
@@ -162,9 +151,9 @@ export default class Register extends Component {
     });
   }
 
-  onChangeCountry = (e) => {
+  onChangeAccount = (e) => {
     this.setState({
-      countryValue: e.target.value,
+      accountValue: e.target.value,
     });
   };
 
@@ -181,9 +170,14 @@ export default class Register extends Component {
 
     if (this.checkBtn.context._errors.length === 0) {
       AuthService.register(
-        this.state.username,
+        this.state.firstname,
+        this.state.lastname,
+        this.state.password,
         this.state.email,
-        this.state.password
+        format(this.state.dateOfBirth, "yyyy-MM-dd"),
+        this.state.tel,
+        this.state.address,
+        this.state.accountValue
       ).then(
         (response) => {
           this.setState({
@@ -287,7 +281,6 @@ export default class Register extends Component {
                     value={this.state.dateOfBirth}
                     validations={[required]}
                   />
-                  {/* <p>{JSON.stringify(this.state.dateOfBirth)}</p> */}
                 </div>
 
                 <div className="form-group">
@@ -303,32 +296,20 @@ export default class Register extends Component {
                 </div>
 
                 <div className="form-group">
-                  <label htmlFor="postal-code">ZIP</label>
-                  <Input
-                    type="text"
-                    className="form-control"
-                    name="zip"
-                    value={this.state.zip}
-                    onChange={this.onChangeZip}
-                    validations={[required]}
-                  />
-                </div>
-
-                <div className="form-group">
-                  <label htmlFor="country">Country</label>
+                  <label htmlFor="country">Account Type</label>
                   <div>
                     <select
                       className="form-control"
-                      onChange={this.onChangeCountry}
-                      value={this.state.countryValue}
+                      onChange={this.onChangeAccount}
+                      value={this.state.accountValue}
                     >
-                      {this.state.countryOptions.map((item) => (
+                      {this.state.accountOptions.map((item) => (
                         <option key={item.value} value={item.value}>
                           {item.name}
                         </option>
                       ))}
                     </select>
-                    {/* <p>Country data: {this.state.countryValue}</p> */}
+                    <p>Country data: {this.state.accountValue}</p>
                   </div>
                 </div>
 
