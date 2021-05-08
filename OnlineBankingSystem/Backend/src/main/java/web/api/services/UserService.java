@@ -14,6 +14,7 @@ import web.api.repositories.UserRepository;
 import web.api.security.CustomUserDetails;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class UserService implements UserDetailsService{
@@ -67,6 +68,12 @@ public class UserService implements UserDetailsService{
         }
 
         return status;
+    }
+
+    public User getUserByEmailId(String emailId) throws UsernameNotFoundException{
+        User userObj = userRepository.findUserByEmailId(emailId)
+                .orElseThrow(()->new UsernameNotFoundException("User not found with emailId "+emailId));
+        return userObj;
     }
 
     public void changeCustomerStatus(Long userId){
