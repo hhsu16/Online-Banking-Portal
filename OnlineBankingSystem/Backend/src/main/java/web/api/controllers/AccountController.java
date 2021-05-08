@@ -13,7 +13,8 @@ import web.api.services.TransactionService;
 
 import java.time.LocalDate;
 
-@Controller
+@RestController
+@CrossOrigin(origins = "http://localhost:3000")
 public class AccountController {
 
     private final AccountService accountService;
