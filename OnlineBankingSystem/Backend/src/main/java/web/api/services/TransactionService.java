@@ -40,7 +40,7 @@ public class TransactionService
     }
 
 
-    public List<Transaction> getTransaction(Account account)
+    public List<Transaction> getTransactions(Account account)
      {
         List<Transaction> allTransactions = transactionRepository.findTransactionsByAccountEquals(account);
         return allTransactions;
@@ -56,6 +56,12 @@ public class TransactionService
            l = latestTran.getTransactionId();
        }
        return l;
+    }
+
+    public void deleteAccountTransactions(Long accountNo){
+        //Account accountObj = accountRepository.findAccountByAccountNoEquals(accountNo);
+        List<Transaction> transactions = transactionRepository.findTransactionsByAccount_AccountNo(accountNo);
+        transactionRepository.deleteInBatch(transactions);
     }
 
 }

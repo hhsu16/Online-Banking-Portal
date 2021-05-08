@@ -2,13 +2,11 @@ package web.api.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import web.api.exceptions.UserNotFoundException;
 import web.api.models.Prospect;
 import web.api.models.enums.ProspectStatus;
 import web.api.repositories.ProspectRepository;
 
 import java.util.List;
-import java.util.Optional;
 
 
 @Service
@@ -22,7 +20,7 @@ public class ProspectService {
 
     public List<Prospect> getProspects()
     {
-        return prospectRepository.findAllByProspectStatusEquals(ProspectStatus.PendingApproval);
+        return prospectRepository.findAllByProspectStatusEquals(ProspectStatus.PENDING_APPROVAL);
     }
 
     public Prospect findProspectById(Long prospectId){
@@ -31,14 +29,15 @@ public class ProspectService {
 
     public Prospect addProspect(Prospect prospectObj)
     {
-        prospectObj.setProspectStatus(ProspectStatus.PendingApproval);
+        prospectObj.setProspectStatus(ProspectStatus.PENDING_APPROVAL);
         return prospectRepository.save(prospectObj);
     }
 
     public Prospect updateProspectStatus(ProspectStatus prospectStatus, String email){
         Prospect getProspect = prospectRepository.findProspectByProspectStatusEqualsAndEmailId(prospectStatus, email);
-        getProspect.setProspectStatus(ProspectStatus.Active);
+        getProspect.setProspectStatus(ProspectStatus.ACTIVE);
         return prospectRepository.save(getProspect);
     }
+
 
 }

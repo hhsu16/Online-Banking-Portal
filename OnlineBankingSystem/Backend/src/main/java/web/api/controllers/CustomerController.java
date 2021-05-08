@@ -3,15 +3,13 @@ package web.api.controllers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import web.api.models.*;
 import web.api.services.*;
 
 import java.util.List;
 
-@Controller
-@RequestMapping("api/customer")
+@RestController
 @CrossOrigin("http://localhost:3000/")
 public class CustomerController {
 
@@ -33,7 +31,7 @@ public class CustomerController {
     @GetMapping("/viewAccounts")
     public ResponseEntity<List<Account>> viewUserAccounts(@RequestParam("userId") Long userId){
         List<Account> userAccounts = accountService.getUserAccounts(userId);
-        if(userAccounts.size()>0){
+        if(userAccounts != null){
             return new ResponseEntity<>(userAccounts, HttpStatus.OK);
         }
         else{
@@ -41,31 +39,36 @@ public class CustomerController {
         }
     }
 
+    @PutMapping("/updatePassword")
+    public ResponseEntity<?> updateUserPassword(@RequestParam("userId") Long userId, @RequestBody User u){
+        ResponseEntity<?> responseEntity=null;
+        try{
+            User userObj = userService.getUserFromUserId(userId);
+            boolean updated = userService.changePassword(userObj, u.getPassword());
+            if(updated){
+                responseEntity = new ResponseEntity<>(HttpStatus.ACCEPTED);
+            }
+            else{
+                responseEntity = new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            }
+        }catch(Exception ex){
+            new Exception("Password is not updated", ex);
+        }
+        return responseEntity;
+    }
+
     @GetMapping("/viewPayees")
     public ResponseEntity<List<Payee>> viewUserPayees(@RequestParam("userId") Long userId){
         User requestedUser = userService.getUserFromUserId(userId);
         List<Payee> userPayees =  payeeUserRelationService.getUserPayees(requestedUser);
-
-        if(userPayees.size()>0){
-            return new ResponseEntity<>(userPayees, HttpStatus.OK);
-        }
-        else{
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-        }
+        return new ResponseEntity<>(userPayees, HttpStatus.OK);
     }
 
 
     @GetMapping("/viewBillers")
-    public ResponseEntity<List<Biller>> viewUserBillers(@RequestParam("userId") Long userId){
-        User requestedUser = userService.getUserFromUserId(userId);
+    public ResponseEntity<List<Biller>> viewUserBillers(){
         List<Biller> userBillers = billerService.getAllBillers();
-
-        if(userBillers.size()>0){
-            return new ResponseEntity<>(userBillers, HttpStatus.OK);
-        }
-        else{
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-        }
+        return new ResponseEntity<>(userBillers, HttpStatus.OK);
     }
 
     @PostMapping("/registerPayee")
