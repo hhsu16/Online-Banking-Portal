@@ -16,8 +16,9 @@ import web.api.services.UserService;
 
 import java.util.List;
 
+
+@RestController
 @CrossOrigin(origins = "http://localhost:3000")
-@Controller
 public class AdminController {
 
     private final ProspectService prospectService;
@@ -39,7 +40,7 @@ public class AdminController {
     @GetMapping("/prospects")
     public ResponseEntity<List<Prospect>> getUsers() {
         List<Prospect> prospects = prospectService.getProspects();
-        return ResponseEntity.ok().body(prospects);
+        return new ResponseEntity<>(prospects, HttpStatus.OK);
     }
 
     @PostMapping("/addNewCustomer")
@@ -62,6 +63,19 @@ public class AdminController {
     public ResponseEntity<List<Account>> viewCustomerAccounts(){
         List<Account> customerAccounts = accountService.getCustomerAccounts();
         return new ResponseEntity<>(customerAccounts, HttpStatus.OK);
+    }
+
+    @PutMapping("/rejectProspect")
+    public ResponseEntity<?> rejectProspectCustomer(@RequestParam("prospectId") Long prospectId){
+        ResponseEntity<?> responseEntity;
+        boolean status = prospectService.rejectProspect(prospectId);
+        if(status){
+            responseEntity = new ResponseEntity<>(HttpStatus.OK);
+        }
+        else{
+            responseEntity = new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+        return responseEntity;
     }
 
     @GetMapping("/viewCustomers")

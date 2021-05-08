@@ -10,7 +10,7 @@ import web.api.services.*;
 import java.util.List;
 
 @RestController
-@CrossOrigin("http://localhost:3000/")
+@CrossOrigin(origins = "http://localhost:3000")
 public class CustomerController {
 
     private final PayeeUserRelationService payeeUserRelationService;

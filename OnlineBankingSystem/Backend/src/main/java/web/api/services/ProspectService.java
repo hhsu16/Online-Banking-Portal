@@ -39,5 +39,19 @@ public class ProspectService {
         return prospectRepository.save(getProspect);
     }
 
+    public boolean rejectProspect(Long prospectId){
+        boolean status = false;
+        try{
+            Prospect prospectObj = findProspectById(prospectId);
+            prospectObj.setProspectStatus(ProspectStatus.REJECT);
+            prospectRepository.save(prospectObj);
+            status = true;
+        }
+        catch (Exception e){
+            status = false;
+        }
+        return status;
+    }
+
 
 }

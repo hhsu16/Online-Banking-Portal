@@ -12,6 +12,7 @@ import web.api.services.TransactionService;
 import java.util.List;
 
 @RestController
+@CrossOrigin(origins = "http://localhost:3000")
 public class TransactionController
 {
 
