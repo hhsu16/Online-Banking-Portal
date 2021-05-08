@@ -11,10 +11,11 @@ import Dashboard from "./components/dashboard";
 import FilterView from "./components/filterView";
 import Transfer from "./components/transfer";
 import External from "./components/external";
+import Home from "./components/home";
 
-// import Profile from "./components/profile";
+import Profile from "./components/profile";
+import Admin from "./components/admin";
 // import BoardUser from "./components/board-user";
-// import Home from "./components/home";
 // import BoardAdmin from "./components/board-admin";
 
 class App extends Component {
@@ -23,7 +24,8 @@ class App extends Component {
     this.logOut = this.logOut.bind(this);
 
     this.state = {
-      // showAdminBoard: false,
+      showAdminBoard: false,
+      showCustomerBoard: false,
       currentUser: undefined,
     };
   }
@@ -34,7 +36,8 @@ class App extends Component {
     if (user) {
       this.setState({
         currentUser: user,
-        showAdminBoard: user.roles.includes("ROLE_ADMIN"),
+        showAdminBoard: user.role.includes("ADMIN"),
+        showCustomerBoard: user.role.includes("CUSTOMER"),
       });
     }
   }
@@ -44,7 +47,7 @@ class App extends Component {
   }
 
   render() {
-    const { currentUser, showAdminBoard } = this.state;
+    const { currentUser, showAdminBoard, showCustomerBoard } = this.state;
 
     return (
       <div>
@@ -53,36 +56,30 @@ class App extends Component {
             HTVS
           </Link>
           <div className="navbar-nav mr-auto">
-            {/* <li className="nav-item">
-              <Link to={"/home"} className="nav-link">
-                Home
-              </Link>
-            </li> */}
-
-            {/* {showAdminBoard && (
+            {showAdminBoard && (
               <li className="nav-item">
                 <Link to={"/admin"} className="nav-link">
                   Admin Board
                 </Link>
               </li>
-            )} */}
+            )}
 
-            {/* {currentUser && (
+            {showCustomerBoard && (
               <li className="nav-item">
-                <Link to={"/user"} className="nav-link">
-                  User
+                <Link to={"/dashboard"} className="nav-link">
+                  Dashboard
                 </Link>
               </li>
-            )} */}
+            )}
           </div>
 
           {currentUser ? (
             <div className="navbar-nav ml-auto">
-              {/* <li className="nav-item">
+              <li className="nav-item">
                 <Link to={"/profile"} className="nav-link">
-                  {currentUser.username}
+                  {currentUser.firstName}
                 </Link>
-              </li> */}
+              </li>
               <li className="nav-item">
                 <a href="/login" className="nav-link" onClick={this.logOut}>
                   LogOut
@@ -108,17 +105,21 @@ class App extends Component {
 
         <div className="container mt-3">
           <Switch>
-            {/* <Route exact path={["/", "/home"]} component={Home} /> */}
+            <Route exact path={["/", "/home"]} component={Home} />
             <Route exact path="/login" component={Login} />
             <Route exact path="/register" component={Register} />
+
+            <Route exact path="/profile" component={Profile} />
+
+            <Route exact path="/dashboard" component={Dashboard} />
             <Route exact path="/transfer" component={Transfer} />
             <Route exact path="/external" component={External} />
             <Route exact path="/filterView" component={FilterView} />
-            <Route exact path="/dashboard" component={Dashboard} />
-            {/* <Route exact path="/profile" component={Profile} /> */}
+
+            <Route exact path="/admin" component={Admin} />
+
             {/* <Route path="/user" component={BoardUser} /> */}
-            {/* <Route path="/mod" component={BoardModerator} />
-            <Route path="/admin" component={BoardAdmin} /> */}
+            {/* <Route path="/mod" component={BoardModerator} /> */}
           </Switch>
         </div>
       </div>
