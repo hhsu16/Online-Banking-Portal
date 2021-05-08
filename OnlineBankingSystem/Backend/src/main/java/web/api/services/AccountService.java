@@ -60,6 +60,67 @@ public class AccountService {
 
     }
 
+    public int depositFundsIntoAccount(Long accountNo, double depositAmount){
+        int status = 0;
+        Long transactId = transactionService.getLatestTransactionId();
+        transactId++;
+        String message = "Amount of $"+depositAmount+" deposited";
+        Account userAccount = null;
+        try{
+            userAccount = accountRepository.findAccountByAccountNoEquals(accountNo);
+            userAccount.setAccountBalance(userAccount.getAccountBalance()+depositAmount);
+            accountRepository.save(userAccount);
+            transactionService.addTransaction(new Transaction(transactId, new Date(), message, TransactionType.CREDIT, depositAmount, TransactionStatus.SUCCESS, userAccount));
+            status = 1;
+        }
+        catch(Exception e){
+            transactionService.addTransaction(new Transaction(transactId, new Date(), message, TransactionType.CREDIT, depositAmount, TransactionStatus.FAILED, userAccount));
+            status = -99;
+        }
+        return status;
+    }
+
+    public int depositRefundFees(Long accountNo, double depositAmount){
+        int status = 0;
+        Long transactId = transactionService.getLatestTransactionId();
+        transactId++;
+        String message = "Refund of $"+depositAmount+" deposited";
+        Account userAccount = null;
+        try{
+            userAccount = accountRepository.findAccountByAccountNoEquals(accountNo);
+            userAccount.setAccountBalance(userAccount.getAccountBalance()+depositAmount);
+            accountRepository.save(userAccount);
+            transactionService.addTransaction(new Transaction(transactId, new Date(), message, TransactionType.CREDIT, depositAmount, TransactionStatus.SUCCESS, userAccount));
+            status = 1;
+        }
+        catch(Exception e){
+            transactionService.addTransaction(new Transaction(transactId, new Date(), message, TransactionType.CREDIT, depositAmount, TransactionStatus.FAILED, userAccount));
+            status = -99;
+        }
+        return status;
+    }
+
+    public int withdrawFundsFromAccount(Long accountNo, double withdrawAmount){
+        int status = 0;
+        Long transactId = transactionService.getLatestTransactionId();
+        transactId++;
+        String message = "Withdrawn an amount of $"+withdrawAmount;
+        Account userAccount = null;
+        try{
+            userAccount = accountRepository.findAccountByAccountNoEquals(accountNo);
+            userAccount.setAccountBalance(userAccount.getAccountBalance()-withdrawAmount);
+            accountRepository.save(userAccount);
+            transactId = transactionService.getLatestTransactionId();
+            transactId++;
+            transactionService.addTransaction(new Transaction(transactId, new Date(), message, TransactionType.DEBIT, withdrawAmount, TransactionStatus.SUCCESS, userAccount));
+            status = 1;
+        }catch(Exception e){
+            transactionService.addTransaction(new Transaction(transactId, new Date(), message, TransactionType.DEBIT, withdrawAmount, TransactionStatus.FAILED, userAccount));
+            status = -99;
+        }
+        return status;
+    }
+
     @Nullable
     public Account getAccount(Long accountNo){
         return accountRepository.findAccountByAccountNoEquals(accountNo);
@@ -116,6 +177,23 @@ public class AccountService {
             throw new InsufficientFundsException("Insufficient Funds");
         }
         return result;
+    }
+
+    public List<Account> getCustomerAccounts(){
+        return accountRepository.findAccountsByAccountStatusEquals(true);
+    }
+
+    public double totalCustomerBalance(Long userId){
+        List<Account> customerAccounts = accountRepository.findAccountsByUser_UserIdEquals(userId);
+        double totalAccountBalance = 0.0;
+        for (Account acc : customerAccounts) {
+            totalAccountBalance += acc.getAccountBalance();
+        }
+        return totalAccountBalance;
+    }
+
+    public void deleteCustomerAccount(Long userId){
+        List<Account> customerAccounts = accountRepository.findAccountsByUser_UserIdEquals(userId);
     }
 }
 

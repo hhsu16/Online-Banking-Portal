@@ -1,14 +1,14 @@
 ************************ Users ***************************
 
 INSERT INTO users(address, contact, date_of_birth, email_id, first_name, last_name, password, role, user_status) VALUES
-('360 San Jose', '9959911369', '1994-10-01', 'chvamsi@gmail.com','Vamsi Srinivas','C','login','Customer','Inactive');
+('360 San Jose', '9959911391', '1994-10-01', 'tom@gmail.com','Tom','Curran','login','CUSTOMER','ACTIVE');
 INSERT INTO users(address, contact, date_of_birth, email_id, first_name, last_name, password, role, user_status) VALUES
-('361 San Jose', '9959911370', '1985-11-05', 'vamsi@gmail.com','Srinivas','C','login','Customer','Inactive');
+('361 San Jose', '9959911370', '1985-11-05', 'smith@gmail.com','Smith','Steven','login','ADMIN','ACTIVE');
 INSERT INTO users(address, contact, date_of_birth, email_id, first_name, last_name, password, role, user_status) VALUES
-('360 San Jose', '9959911371', '1994-10-01', 'chv@gmail.com','Vamsi','C','login','Customer','Inactive');
+('360 San Jose', '9959911371', '1994-10-01', 'kane@gmail.com','Kane','W','login','CUSTOMER','ACTIVE');
 
 SignUp : 
-	->URL : http://localhost:8080/api/user/signup
+	->URL : http://localhost:8080/signup
 	->Request Body : {
     			"accountTypeWanted" : "SAVING",
     			"address" : "180 Alicante Dr",
@@ -18,18 +18,22 @@ SignUp :
     			"firstName" : "Manoj",
     			"lastName" : "G",
     			"password" : "Login@0110"
-		}
+		            }
 Login : 
-	->URL : http://localhost:8080/api/user/login?email=user123@gmail.com&password=Login@0110
+	->URL : http://localhost:8080/login
+	->Request Body : {
+                         "emailId":"stark@gmail.com",
+                         "password":"password"
+                     }
 
 View Accounts : 
-	->URL : http://localhost:8080/api/customer/viewAccounts?userId=4
+	->URL : http://localhost:8080/viewAccounts?userId=4
 
 AddNewCustomer : 
-	->URL : http://localhost:8080/api/admin/addNewCustomer?prospectId=1
+	->URL : http://localhost:8080/addNewCustomer?prospectId=1
 
 RegisterPayee : 
-	->URL : http://localhost:8080/api/customer/registerPayee?userId=2
+	->URL : http://localhost:8080/registerPayee?userId=2
 	->Request Body : {
 					"payeeAccount" : 12345,
 					"payeeName" : "Gowtham",
@@ -37,7 +41,7 @@ RegisterPayee :
 					"payeeContactNo" : "4085496780"
 				  }
 View User Payees :
-	->URL : http://localhost:8080/api/customer/viewPayees?userId=4
+	->URL : http://localhost:8080/viewPayees?userId=4
 
 One Time fund transfer :
 	->URL : http://localhost:8080/api/account/fundTransfer?accountNo=1&payeeId=2&amount=10

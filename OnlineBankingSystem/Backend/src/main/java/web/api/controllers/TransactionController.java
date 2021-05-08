@@ -3,7 +3,6 @@ package web.api.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import web.api.models.Account;
 import web.api.models.Transaction;
@@ -12,9 +11,7 @@ import web.api.services.TransactionService;
 
 import java.util.List;
 
-@Controller
-@RequestMapping("/api/account")
-
+@RestController
 public class TransactionController
 {
 
@@ -29,13 +26,13 @@ public class TransactionController
     }
 
 
-    @GetMapping("/showTransactions")
+    @GetMapping("/viewTransactions")
     public ResponseEntity<?> getTransactions(@RequestParam("accountNo") Long accountNo)
     {
 
         Account account = accountService.getAccount(accountNo);
 
-        List<Transaction> transactions= transactionService.getTransaction(account);
+        List<Transaction> transactions= transactionService.getTransactions(account);
         return ResponseEntity.ok().body(transactions);
     }
 
