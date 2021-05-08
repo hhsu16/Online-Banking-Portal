@@ -10,6 +10,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 import web.api.models.Prospect;
 import web.api.models.User;
+import web.api.models.UserResponse;
 import web.api.services.ProspectService;
 import web.api.services.UserService;
 import web.api.utilities.JWTUtil;
@@ -45,7 +46,8 @@ public class UserController {
 
         final UserDetails userDetails = userService.loadUserByUsername(user.getEmailId());
         final String jwt = jwtUtil.generateToken(userDetails);
-        return new ResponseEntity<>(jwt, HttpStatus.OK);
+        final User userObj = userService.getUserByEmailId(user.getEmailId());
+        return new ResponseEntity<>(new UserResponse(userObj, jwt), HttpStatus.OK);
     }
 
     @PostMapping("/signup")
