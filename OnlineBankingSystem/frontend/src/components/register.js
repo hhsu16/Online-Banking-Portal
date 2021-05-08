@@ -170,14 +170,14 @@ export default class Register extends Component {
 
     if (this.checkBtn.context._errors.length === 0) {
       AuthService.register(
-        this.state.firstName,
-        this.state.lastName,
+        this.state.firstname,
+        this.state.lastname,
         this.state.password,
         this.state.email,
         format(this.state.dateOfBirth, "yyyy-MM-dd"),
         this.state.tel,
         this.state.address,
-        this.accountValue
+        this.state.accountValue
       ).then(
         (response) => {
           this.setState({
@@ -281,7 +281,6 @@ export default class Register extends Component {
                     value={this.state.dateOfBirth}
                     validations={[required]}
                   />
-                  <p>{JSON.stringify(this.state.dateOfBirth)}</p>
                 </div>
 
                 <div className="form-group">
@@ -310,7 +309,7 @@ export default class Register extends Component {
                         </option>
                       ))}
                     </select>
-                    {/* <p>Country data: {this.state.countryValue}</p> */}
+                    <p>Country data: {this.state.accountValue}</p>
                   </div>
                 </div>
 

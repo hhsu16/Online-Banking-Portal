@@ -12,7 +12,8 @@ class AuthService {
       })
       .then((response) => {
         if (response.data) {
-          localStorage.setItem("user", JSON.stringify(response.data));
+          localStorage.setItem("user", JSON.stringify(response.data.user));
+          localStorage.setItem("token", JSON.stringify(response.data.token));
         }
         // console.log(response.data);
         return response.data;
@@ -21,6 +22,7 @@ class AuthService {
 
   logout() {
     localStorage.removeItem("user");
+    localStorage.removeItem("token");
   }
 
   register(
@@ -34,14 +36,14 @@ class AuthService {
     accountTypeWanted
   ) {
     return axios.post(API_URL + "signup", {
-      firstName,
-      lastName,
-      password,
-      emailId,
-      dateOfBirth,
-      contact,
-      address,
-      accountTypeWanted,
+      firstName: firstName,
+      lastName: lastName,
+      password: password,
+      emailId: emailId,
+      dateOfBirth: dateOfBirth,
+      contact: contact,
+      address: address,
+      accountTypeWanted: accountTypeWanted,
       headers: { "Access-Control-Allow-Origin": "*" },
     });
   }
