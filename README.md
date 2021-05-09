@@ -1,6 +1,4 @@
-# Online Banking Project
-Online Banking System using Spring boot, React and MySQL.
-
+### Team
 
 ## Online Banking features:
 
@@ -17,9 +15,7 @@ Online Banking System using Spring boot, React and MySQL.
 > Customer can view all of his transaction records and account balance.
 
 
-### Admin Portal:
-
-> Developed Admin Portal using React.
+### Admin Portal
 
 > Normal user cannot view any information in Admin Portal
 
@@ -29,6 +25,19 @@ Online Banking System using Spring boot, React and MySQL.
 
 > Admin can add transactions such as manual refunds on fees
 
+## Tools and Languages
 
+> FrontEnd using React
 
+> Backend using springboot
+
+> Database using Mysql
+
+## Installation instructions
+
+## Prerequisites
+
+## XP Core Values Implemented:
+
+## Some screenshots
 
