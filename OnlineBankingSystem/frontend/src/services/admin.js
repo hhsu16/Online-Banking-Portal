@@ -16,7 +16,7 @@ class UserService {
   }
 
   reject(id) {
-    return axios.put(API_URL + `rejectProspect?prospectId=${id}`, {
+    return axios.put(API_URL + `rejectProspect?prospectId=${id}`,{}, {
       headers: {
         "Access-Control-Allow-Origin": "*",
         "Content-Type": "application/json",
@@ -27,14 +27,16 @@ class UserService {
   }
 
   approve(id) {
-    return axios.post(API_URL + `addNewCustomer?prospectId=${id}`, {
+    return axios.post(API_URL + `addNewCustomer?prospectId=${id}`,{}, {
       headers: {
         "Access-Control-Allow-Origin": "*",
         "Content-Type": "application/json",
         "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
         Authorization: "Bearer " + token,
       },
-    });
+    }
+
+    );
   }
 }
 
