@@ -15,7 +15,7 @@
 > Customer can view all of his transaction records and account balance.
 
 
-### Admin Portal
+### Admin:
 
 > Normal user cannot view any information in Admin Portal
 
@@ -33,11 +33,15 @@
 
 > Database using Mysql
 
+> Scrum Management using Jira
+
+## Architectural Diagram
+
 ## Installation instructions
 
 ## Prerequisites
 
 ## XP Core Values Implemented:
 
-## Some screenshots
+## Screenshots
 
