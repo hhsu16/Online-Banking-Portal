@@ -57,7 +57,7 @@ export default class admin extends React.Component {
   approveProspect() {
     AdminService.approve(this.state.selectId)
       .then((response) => {
-        console.log(response.data);
+        console.log("RES:"+response.data);
         this.props.history.push("/");
       })
       .catch((e) => {

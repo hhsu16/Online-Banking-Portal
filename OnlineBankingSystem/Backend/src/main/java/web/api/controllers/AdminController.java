@@ -56,7 +56,6 @@ public class AdminController {
         }
 
         return new ResponseEntity<>(newAccount, HttpStatus.CREATED);
-
     }
 
     @GetMapping("/viewCustomerAccounts")
