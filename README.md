@@ -37,10 +37,6 @@
 
 ## Architectural Diagram
 
-## Installation instructions
-
-## Prerequisites
-
 ## XP Core Values Implemented:
 
 ## Screenshots
