@@ -11,4 +11,7 @@ import java.util.List;
 public interface RecurringPaymentRepository extends JpaRepository<RecurringPayment, Long> {
 
     List<RecurringPayment> findByPaymentDate(LocalDate newDate);
+
+    List<RecurringPayment> findRecurringPaymentsByAccount_AccountNo(Long accountNo);
+
 }

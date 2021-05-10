@@ -90,4 +90,15 @@ public class CustomerController {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+    @PostMapping("/deleteAccounts")
+    public ResponseEntity<?> requestToCloseAccounts(@RequestParam("userId") Long userId){
+        boolean status = userService.takeCustomerCloseRequest(userId);
+        if(status){
+            return new ResponseEntity<>(HttpStatus.ACCEPTED);
+        }
+        else{
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
 }

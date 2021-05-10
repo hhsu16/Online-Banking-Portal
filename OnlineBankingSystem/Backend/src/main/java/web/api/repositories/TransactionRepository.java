@@ -5,6 +5,7 @@ import org.springframework.stereotype.Repository;
 import web.api.models.Account;
 import web.api.models.Transaction;
 
+import java.util.ArrayList;
 import  java.util.List;
 
 
@@ -14,7 +15,7 @@ public interface TransactionRepository extends JpaRepository<Transaction, Long>
 
     List<Transaction> findTransactionsByAccountEquals(Account account);
 
-    List<Transaction> findTransactionsByAccount_AccountNo(Long accountNo);
+    ArrayList<Transaction> findTransactionsByAccount_AccountNo(Long accountNo);
 
     Transaction findTopByOrderByTransactionId();
 
