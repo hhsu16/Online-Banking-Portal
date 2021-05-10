@@ -88,7 +88,7 @@ public class AdminController {
         return new ResponseEntity<>(balance, HttpStatus.ACCEPTED);
     }
 
-    @GetMapping("/closeCustomer")
+    @GetMapping("/closeCustomers")
     public ResponseEntity<List<User>> getAccountClosingRequests(){
         List<DeleteCustomer> dcs = deleteCustomerRepository.findAll();
         ArrayList<User> users = new ArrayList<>();

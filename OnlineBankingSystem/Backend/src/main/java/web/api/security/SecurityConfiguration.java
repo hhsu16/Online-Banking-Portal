@@ -45,7 +45,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.cors().and()
                 .authorizeRequests().antMatchers("/login","/signup").permitAll()
-                .antMatchers("/prospects","/addNewCustomer","/viewCustomers", "/viewCustomerAccounts","/addRefund","/rejectProspect", "/deleteCustomer").hasRole("ADMIN")
+                .antMatchers("/prospects","/addNewCustomer","/viewCustomers", "/viewCustomerAccounts","/addRefund","/rejectProspect", "/deleteCustomer","/closeCustomers").hasRole("ADMIN")
                 .antMatchers("/viewAccounts","/viewPayees","/viewBillers","/registerPayee","/viewTransactions","/updatePassword","/addFunds","/withdrawFunds","/deleteAccounts").hasRole("CUSTOMER")
                 .anyRequest().authenticated()
                 .and().sessionManagement()
