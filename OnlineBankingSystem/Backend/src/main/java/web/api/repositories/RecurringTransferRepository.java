@@ -12,4 +12,6 @@ import java.util.List;
 public interface RecurringTransferRepository extends JpaRepository<RecurringTransfer, Long> {
 
     List<RecurringTransfer> findByTransferDate(LocalDate newDate);
+
+    List<RecurringTransfer> findRecurringTransfersByAccount_AccountNo(Long accountNo);
 }

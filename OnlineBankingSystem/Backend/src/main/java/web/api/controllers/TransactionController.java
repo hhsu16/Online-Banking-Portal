@@ -2,6 +2,7 @@ package web.api.controllers;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import web.api.models.Account;
@@ -34,7 +35,7 @@ public class TransactionController
         Account account = accountService.getAccount(accountNo);
 
         List<Transaction> transactions= transactionService.getTransactions(account);
-        return ResponseEntity.ok().body(transactions);
+        return new ResponseEntity<>(transactions, HttpStatus.OK);
     }
 
 

@@ -14,6 +14,7 @@ import web.api.repositories.TransactionRepository;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -183,17 +184,57 @@ public class AccountService {
         return accountRepository.findAccountsByAccountStatusEquals(true);
     }
 
-    public double totalCustomerBalance(Long userId){
-        List<Account> customerAccounts = accountRepository.findAccountsByUser_UserIdEquals(userId);
-        double totalAccountBalance = 0.0;
-        for (Account acc : customerAccounts) {
-            totalAccountBalance += acc.getAccountBalance();
+    public ArrayList<RecurringPayment> listOfAccountPayments(ArrayList<Long> accountNos){
+        ArrayList<RecurringPayment> payments = new ArrayList<>();
+        for (Long account:accountNos) {
+            payments.addAll(recurringPaymentRepository.findRecurringPaymentsByAccount_AccountNo(account));
         }
-        return totalAccountBalance;
+        return payments;
     }
 
-    public void deleteCustomerAccount(Long userId){
-        List<Account> customerAccounts = accountRepository.findAccountsByUser_UserIdEquals(userId);
+    public ArrayList<RecurringTransfer> listOfAccountTransfers(List<Long> accountNos){
+        ArrayList<RecurringTransfer> transfers = new ArrayList<>();
+        for(Long account : accountNos){
+            transfers.addAll(recurringTransferRepository.findRecurringTransfersByAccount_AccountNo(account));
+        }
+        return transfers;
+    }
+
+    public boolean deleteAccountTransfers(ArrayList<RecurringTransfer> transfers){
+        boolean status = false;
+        try{
+            recurringTransferRepository.deleteAll(transfers);
+            status = true;
+        }
+        catch(Exception ex) {
+            new Exception("Transfers deletion failed", ex);
+        }
+        return status;
+    }
+
+    public boolean deleteAccountPayments(ArrayList<RecurringPayment> payments){
+        boolean status = false;
+        try{
+            recurringPaymentRepository.deleteAll(payments);
+            status = true;
+        }
+        catch(Exception ex) {
+            new Exception("Payments deletion failed", ex);
+        }
+        return status;
+    }
+
+    public boolean deleteUserAccounts(ArrayList<Account> accounts){
+        boolean status = false;
+        try{
+            accountRepository.deleteAll(accounts);
+            status = true;
+        }
+        catch(Exception ex) {
+            new Exception("User accounts deletion failed", ex);
+        }
+        return status;
+
     }
 }
 

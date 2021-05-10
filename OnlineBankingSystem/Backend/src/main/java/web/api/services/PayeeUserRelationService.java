@@ -39,4 +39,28 @@ public class PayeeUserRelationService {
         }
         return relation;
     }
+
+    public ArrayList<PayeeUserRelation> listOfPayeeUserRelations(Long userId){
+        ArrayList<PayeeUserRelation> userRelations = new ArrayList<>();
+        try{
+            userRelations = payeeUserRelationRepository
+                    .findPayeeUserRelationsByUser_UserIdEquals(userId);
+        }
+        catch(Exception e){
+            new Exception("Error during finding User Registered payees", e);
+        }
+        return userRelations;
+    }
+
+    public boolean deleteListOfUserPayeeRelations(ArrayList<PayeeUserRelation> relations){
+        boolean status = false;
+        try{
+            payeeUserRelationRepository.deleteAll(relations);
+            status = true;
+        }
+        catch(Exception e){
+            new Exception("User registered payees are not deleted", e);
+        }
+        return status;
+    }
 }

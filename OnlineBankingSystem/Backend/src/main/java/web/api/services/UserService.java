@@ -6,13 +6,15 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-import web.api.models.Prospect;
+import web.api.models.*;
 import web.api.models.enums.UserRole;
-import web.api.models.User;
 import web.api.models.enums.UserStatus;
+import web.api.repositories.AccountRepository;
+import web.api.repositories.PayeeUserRelationRepository;
 import web.api.repositories.UserRepository;
 import web.api.security.CustomUserDetails;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -20,10 +22,18 @@ import java.util.Optional;
 public class UserService implements UserDetailsService{
 
     private final UserRepository userRepository;
+    private final AccountRepository accountRepository;
+    private final PayeeUserRelationService payeeUserRelationService;
+    private final AccountService accountService;
+    private final TransactionService transactionService;
 
     @Autowired
-    public UserService(UserRepository userRepository){
+    public UserService(TransactionService transactionService, UserRepository userRepository, AccountRepository accountRepository, PayeeUserRelationService payeeUserRelationService, AccountService accountService){
         this.userRepository=userRepository;
+        this.accountRepository = accountRepository;
+        this.payeeUserRelationService = payeeUserRelationService;
+        this.accountService = accountService;
+        this.transactionService = transactionService;
     }
 
     @Override
@@ -66,7 +76,6 @@ public class UserService implements UserDetailsService{
         }catch (Exception ex){
             new Exception("Password is not updated", ex);
         }
-
         return status;
     }
 
@@ -76,10 +85,43 @@ public class UserService implements UserDetailsService{
         return userObj;
     }
 
-    public void changeCustomerStatus(Long userId){
-        User userObj = userRepository.findUserByUserIdEqualsAndRoleEquals(userId, UserRole.CUSTOMER);
-        userObj.setUserStatus(UserStatus.INACTIVE);
-        userRepository.save(userObj);
+    public void deleteUser(User userObj){
+        userRepository.delete(userObj);
+    }
+
+    public double deleteCustomer(Long userId){
+        ArrayList<Long> accountNos = new ArrayList<>();
+        boolean d1, d2, d3, d4, d5;
+        double remainingBalance = 0.0;
+        try{
+            User userObj = userRepository.findUserByUserIdEquals(userId);
+            ArrayList<Account> accounts = accountRepository.findAccountsByUser_UserIdEquals(userId);
+            for (Account account : accounts) {
+                accountNos.add(account.getAccountNo());
+                remainingBalance += account.getAccountBalance();
+                account.setAccountBalance(0.0);
+            }
+            ArrayList<PayeeUserRelation> relations = payeeUserRelationService.listOfPayeeUserRelations(userId);
+            ArrayList<Transaction> userTransactions = transactionService.listOfAllUserAccountTransactions(accountNos);
+            ArrayList<RecurringPayment> payments = accountService.listOfAccountPayments(accountNos);
+            ArrayList<RecurringTransfer> transfers = accountService.listOfAccountTransfers(accountNos);
+            d1 = payeeUserRelationService.deleteListOfUserPayeeRelations(relations);
+            d2 = accountService.deleteAccountPayments(payments);
+            d3 = accountService.deleteAccountTransfers(transfers);
+            d4 = transactionService.deleteListOfTransactions(userTransactions);
+            d5 = accountService.deleteUserAccounts(accounts);
+            if(d1 && d2 && d3 && d4 && d5){
+                deleteUser(userObj);
+            }
+            else{
+                throw new Exception("Unable to close Customer Accounts");
+            }
+
+        }catch(Exception ex){
+            remainingBalance = -999;
+            new Exception("Unknown error", ex);
+        }
+        return remainingBalance;
     }
 
 }

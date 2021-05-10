@@ -25,16 +25,14 @@ public class AdminController {
     private final UserService userService;
     private final AccountController accountController;
     private final AccountService accountService;
-    private final TransactionService transactionService;
 
     @Autowired
-    public AdminController(TransactionService transactionService, AccountService accountService, ProspectService prospectService, UserService userService, AccountController accountController)
+    public AdminController(AccountService accountService, ProspectService prospectService, UserService userService, AccountController accountController)
     {
         this.prospectService = prospectService;
         this.userService = userService;
         this.accountController = accountController;
         this.accountService = accountService;
-        this.transactionService = transactionService;
     }
 
     @GetMapping("/prospects")
@@ -85,6 +83,7 @@ public class AdminController {
 
     @DeleteMapping("/deleteCustomer")
     public ResponseEntity<?> closeCustomerAccount(@RequestParam("userId") Long userId){
-        return new ResponseEntity<>(HttpStatus.OK);
+        double balance = userService.deleteCustomer(userId);
+        return new ResponseEntity<>(balance, HttpStatus.ACCEPTED);
     }
 }

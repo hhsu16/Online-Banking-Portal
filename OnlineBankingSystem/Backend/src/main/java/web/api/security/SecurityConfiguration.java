@@ -45,7 +45,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.cors().and()
                 .authorizeRequests().antMatchers("/login","/signup").permitAll()
-                .antMatchers("/prospects","/addNewCustomer","/viewCustomers", "/viewCustomerAccounts","/addRefund","/rejectProspect").hasRole("ADMIN")
+                .antMatchers("/prospects","/addNewCustomer","/viewCustomers", "/viewCustomerAccounts","/addRefund","/rejectProspect", "/deleteCustomer").hasRole("ADMIN")
                 .antMatchers("/viewAccounts","/viewPayees","/viewBillers","/registerPayee","/viewTransactions","/updatePassword","/addFunds","/withdrawFunds").hasRole("CUSTOMER")
                 .anyRequest().authenticated()
                 .and().sessionManagement()
@@ -65,22 +65,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     public AuthenticationManager authenticationManagerBean() throws Exception {
         return super.authenticationManagerBean();
     }
-
-    /*@Bean
-    public CorsFilter corsFilter() {
-        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        CorsConfiguration config = new CorsConfiguration();
-        config.setAllowCredentials(true);
-        config.addAllowedOrigin("http://localhost:8081");
-        config.addAllowedHeader("*");
-        config.addAllowedMethod("OPTIONS");
-        config.addAllowedMethod("GET");
-        config.addAllowedMethod("POST");
-        config.addAllowedMethod("PUT");
-        config.addAllowedMethod("DELETE");
-        source.registerCorsConfiguration("/**", config);
-        return new CorsFilter(source);
-    }*/
 
     @Bean
     CorsConfigurationSource corsConfigurationSource() {

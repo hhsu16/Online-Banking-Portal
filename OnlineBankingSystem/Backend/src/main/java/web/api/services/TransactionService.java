@@ -10,6 +10,7 @@ import web.api.models.User;
 import web.api.repositories.AccountRepository;
 import web.api.repositories.TransactionRepository;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -58,10 +59,25 @@ public class TransactionService
        return l;
     }
 
-    public void deleteAccountTransactions(Long accountNo){
-        //Account accountObj = accountRepository.findAccountByAccountNoEquals(accountNo);
-        List<Transaction> transactions = transactionRepository.findTransactionsByAccount_AccountNo(accountNo);
-        transactionRepository.deleteInBatch(transactions);
+    public ArrayList<Transaction> listOfAllUserAccountTransactions(ArrayList<Long> accountNos){
+
+        ArrayList<Transaction> userAccountTransactions = new ArrayList<>();
+
+        for (Long accountNo:accountNos) {
+            userAccountTransactions
+                    .addAll(transactionRepository.findTransactionsByAccount_AccountNo(accountNo));
+        }
+
+        return userAccountTransactions;
+    }
+
+    public boolean deleteListOfTransactions(List<Transaction> lstTransactions){
+        boolean deleted = false;
+        if(lstTransactions != null){
+            transactionRepository.deleteAll(lstTransactions);
+            deleted = true;
+        }
+        return deleted;
     }
 
 }
