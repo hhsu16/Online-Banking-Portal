@@ -5,15 +5,14 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-import web.api.models.Account;
-import web.api.models.Prospect;
-import web.api.models.Transaction;
-import web.api.models.User;
+import web.api.models.*;
+import web.api.repositories.DeleteCustomerRepository;
 import web.api.services.AccountService;
 import web.api.services.ProspectService;
 import web.api.services.TransactionService;
 import web.api.services.UserService;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -25,14 +24,16 @@ public class AdminController {
     private final UserService userService;
     private final AccountController accountController;
     private final AccountService accountService;
+    private final DeleteCustomerRepository deleteCustomerRepository;
 
     @Autowired
-    public AdminController(AccountService accountService, ProspectService prospectService, UserService userService, AccountController accountController)
+    public AdminController(DeleteCustomerRepository deleteCustomerRepository, AccountService accountService, ProspectService prospectService, UserService userService, AccountController accountController)
     {
         this.prospectService = prospectService;
         this.userService = userService;
         this.accountController = accountController;
         this.accountService = accountService;
+        this.deleteCustomerRepository = deleteCustomerRepository;
     }
 
     @GetMapping("/prospects")
@@ -83,7 +84,17 @@ public class AdminController {
 
     @DeleteMapping("/deleteCustomer")
     public ResponseEntity<?> closeCustomerAccount(@RequestParam("userId") Long userId){
-        double balance = userService.deleteCustomer(userId);
+        double balance = userService.deleteCustomerAccount(userId);
         return new ResponseEntity<>(balance, HttpStatus.ACCEPTED);
+    }
+
+    @GetMapping("/closeCustomer")
+    public ResponseEntity<List<User>> getAccountClosingRequests(){
+        List<DeleteCustomer> dcs = deleteCustomerRepository.findAll();
+        ArrayList<User> users = new ArrayList<>();
+        for (DeleteCustomer dc :dcs) {
+            users.add(userService.getUserFromUserId(dc.getDeleteUserId()));
+        }
+        return new ResponseEntity<>(users, HttpStatus.OK);
     }
 }

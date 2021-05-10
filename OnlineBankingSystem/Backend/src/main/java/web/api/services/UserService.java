@@ -10,6 +10,7 @@ import web.api.models.*;
 import web.api.models.enums.UserRole;
 import web.api.models.enums.UserStatus;
 import web.api.repositories.AccountRepository;
+import web.api.repositories.DeleteCustomerRepository;
 import web.api.repositories.PayeeUserRelationRepository;
 import web.api.repositories.UserRepository;
 import web.api.security.CustomUserDetails;
@@ -23,17 +24,19 @@ public class UserService implements UserDetailsService{
 
     private final UserRepository userRepository;
     private final AccountRepository accountRepository;
+    private final DeleteCustomerRepository deleteCustomerRepository;
     private final PayeeUserRelationService payeeUserRelationService;
     private final AccountService accountService;
     private final TransactionService transactionService;
 
     @Autowired
-    public UserService(TransactionService transactionService, UserRepository userRepository, AccountRepository accountRepository, PayeeUserRelationService payeeUserRelationService, AccountService accountService){
+    public UserService(DeleteCustomerRepository deleteCustomerRepository, TransactionService transactionService, UserRepository userRepository, AccountRepository accountRepository, PayeeUserRelationService payeeUserRelationService, AccountService accountService){
         this.userRepository=userRepository;
         this.accountRepository = accountRepository;
         this.payeeUserRelationService = payeeUserRelationService;
         this.accountService = accountService;
         this.transactionService = transactionService;
+        this.deleteCustomerRepository = deleteCustomerRepository;
     }
 
     @Override
@@ -89,7 +92,7 @@ public class UserService implements UserDetailsService{
         userRepository.delete(userObj);
     }
 
-    public double deleteCustomer(Long userId){
+    public double deleteCustomerAccount(Long userId){
         ArrayList<Long> accountNos = new ArrayList<>();
         boolean d1, d2, d3, d4, d5;
         double remainingBalance = 0.0;
@@ -122,6 +125,20 @@ public class UserService implements UserDetailsService{
             new Exception("Unknown error", ex);
         }
         return remainingBalance;
+    }
+
+    public boolean takeCustomerCloseRequest(Long userId){
+        boolean status = false;
+        try{
+            DeleteCustomer dc = new DeleteCustomer(userId);
+            deleteCustomerRepository.save(dc);
+            status = true;
+        }
+        catch(Exception ex){
+            status = false;
+            new Exception("Error occured", ex);
+        }
+        return status;
     }
 
 }
