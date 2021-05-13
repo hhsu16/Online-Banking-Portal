@@ -1,43 +1,66 @@
-### Team
+## Team Members
+
+- Vamshi
+- Kevin
+- Shreshta
+- Tejas
 
 ## Online Banking features:
 
 ### User:
 
-> Registration for normal user online banking account.
+* Registration for normal user online banking account.
 
-> Each normal user will have 2 accounts, Checking, Savings accounts.
+* Each normal user will have 2 accounts, Checking, Savings accounts.
 
-> Each account can deposit and withdraw money.
+* Each account can deposit and withdraw money.
 
-> Customer can transfer money between accounts and to someone else.
+* Customer can transfer money between accounts and to someone else.
 
-> Customer can view all of his transaction records and account balance.
+* Customer can view all of his transaction records and account balance.
 
 
 ### Admin:
 
-> Normal user cannot view any information in Admin Portal
+*  Normal user cannot view any information in Admin Portal
 
-> Admin can view all the users and all the information of each user.
+*  Admin can view all the users and all the information of each user.
 
-> Admin can enable or disable a certain user.
+*  Admin can enable or disable a certain user.
 
-> Admin can add transactions such as manual refunds on fees
+* Admin can add transactions such as manual refunds on fees
 
 ## Tools and Languages
 
-> FrontEnd using React
+* FrontEnd using React
 
-> Backend using springboot
+* Backend using springboot
 
-> Database using Mysql
+* Database using Mysql
 
-> Scrum Management using Jira
+* Scrum Management using Jira
 
 ## Architectural Diagram
 
 ## XP Core Values Implemented:
+
+- **Communication**
+
+- **Feedback**
+
+- **Respect**
+
+## Individual Contribution
+
+- Our team work division has two categories, Frontend and Backend application development
+
+- Frontend Application design, implementation - Kevin , Tejas, Vamshi,
+
+- Backend Application design, implementation   - Vamshi and Shreshta
+
+- Deployment - Tejas
+
+
 
 ## Screenshots
 
