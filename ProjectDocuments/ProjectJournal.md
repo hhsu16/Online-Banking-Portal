@@ -9,7 +9,7 @@ Project Journal
 
 ### Minutes of the Meeting
 
-#### Vamshi
+#### Vamsi
   Q1 => Read the project requirements, setup github project    
   Q2 =>  Discussed and finalised Design    
   Q3 => No blockers     
