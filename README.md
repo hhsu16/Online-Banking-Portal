@@ -67,9 +67,9 @@ feedback from the team.
 
 - Our team work division has two categories, Frontend and Backend application development
 
-- Frontend Application design, implementation - Kevin , Tejas, Vamshi,
+- Frontend Application design, implementation - Kevin , Tejas, Vamsi.
 
-- Backend Application design, implementation   - Vamshi and Shreshta
+- Backend Application design, implementation   - Vamsi and Shreshta.
 
 - Deployment - Tejas
 
