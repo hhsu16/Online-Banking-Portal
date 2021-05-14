@@ -1,9 +1,9 @@
 ## Team Members
 
-- Vamsi chalamolu
-- Kevin
+- Vamsi Srinivas Chalamolu
+- Kevin Hsu
 - Shreshta Balmuri
-- Tejas
+- Tejas Desai
 
 ## Online Banking features:
 
@@ -13,22 +13,22 @@
 
 * Each normal user will have 2 accounts, Checking, Savings accounts.
 
-* Each account can deposit and withdraw money.
+* Transfer (internal) between your own accounts - one time or recurring
 
-* Customer can transfer money between accounts and to someone else.
+* Set up recurring or one-time Bill payment for external payees
 
-* Customer can view all of his transaction records and account balance.
+* View and search Transactions - for credits/debits/checks/fees - up to  last 18 months
+
+
 
 
 ### Admin:
 
-*  Normal user cannot view any information in Admin Portal
+* Adding new accounts - Checking, Savings
 
-*  Admin can view all the users and all the information of each user.
+* Closing existing accounts
 
-*  Admin can enable or disable a certain user.
-
-* Admin can add transactions such as manual refunds on fees
+* Add transactions - such as manual refunds on fees
 
 
 ## Tools and Languages
@@ -50,13 +50,13 @@
 - **Communication**
 
 * Communication played huge role in our team. We had scrum calls twice a week, where we discussed the 
-* progress of each team member, thereby making necessary decisions and further roadmap.
+progress of each team member, thereby making necessary decisions and further roadmap.
 
 - **Feedback**
 
 * Each one of the team members gave feedback to one another in the team, during the testing phase, which 
-* greatly helped us in identifying the bugs. Code has been committed to master after proper review and 
-* feedback from the team.
+greatly helped us in identifying the bugs. Code has been committed to master after proper review and 
+feedback from the team.
 
 - **Respect**
 
