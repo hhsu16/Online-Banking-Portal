@@ -77,7 +77,7 @@ Project Journal
   Q3 => No blockers   
 
 
-  ## Week 3:
+  ## Week 4:
 ### Minutes of the Meeting
 
 #### Vamshi
