@@ -7,3 +7,7 @@ npm install
 npm start
 
 Development server will be accessible from http://localhost:3000
+
+# Alternate admin interface
+
+![Alternate Admin interface](/screenshot_altadmin.jpg?raw=true "Alternate Admin interface")
