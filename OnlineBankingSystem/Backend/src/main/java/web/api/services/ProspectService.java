@@ -6,6 +6,7 @@ import web.api.models.Prospect;
 import web.api.models.enums.ProspectStatus;
 import web.api.repositories.ProspectRepository;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -20,7 +21,7 @@ public class ProspectService {
 
     public List<Prospect> getProspects()
     {
-        return prospectRepository.findAllByProspectStatusEquals(ProspectStatus.PENDING_APPROVAL);
+        return  prospectRepository.findAllByProspectStatusEquals(ProspectStatus.PENDING_APPROVAL);
     }
 
     public Prospect findProspectById(Long prospectId){

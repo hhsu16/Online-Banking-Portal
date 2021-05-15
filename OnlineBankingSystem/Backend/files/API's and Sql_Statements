@@ -3,7 +3,7 @@
 INSERT INTO users(address, contact, date_of_birth, email_id, first_name, last_name, password, role, user_status) VALUES
 ('360 San Jose', '9959911391', '1994-10-01', 'tom@gmail.com','Tom','Curran','login','CUSTOMER','ACTIVE');
 INSERT INTO users(address, contact, date_of_birth, email_id, first_name, last_name, password, role, user_status) VALUES
-('361 San Jose', '9959911370', '1985-11-05', 'smith@gmail.com','Smith','Steven','login','ADMIN','ACTIVE');
+('361 San Jose', '9959911777', '1985-11-05', 'tony@gmail.com','Tony','Stark','login','ADMIN','ACTIVE');
 INSERT INTO users(address, contact, date_of_birth, email_id, first_name, last_name, password, role, user_status) VALUES
 ('360 San Jose', '9959911371', '1994-10-01', 'kane@gmail.com','Kane','W','login','CUSTOMER','ACTIVE');
 

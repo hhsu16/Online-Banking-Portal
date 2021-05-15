@@ -3,13 +3,11 @@ package web.api.controllers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import web.api.models.*;
 import web.api.repositories.DeleteCustomerRepository;
 import web.api.services.AccountService;
 import web.api.services.ProspectService;
-import web.api.services.TransactionService;
 import web.api.services.UserService;
 
 import java.util.ArrayList;
@@ -47,11 +45,19 @@ public class AdminController {
         Account newAccount = null;
         Prospect prospect = prospectService.findProspectById(prospectId);
         if(prospect!=null){
-            User isUserCreated = userService.addUser(prospect);
-            if(isUserCreated != null){
-                prospectService.updateProspectStatus(prospect.getProspectStatus(), prospect.getEmailId());
-                newAccount = accountController.createAccount(new Account(isUserCreated, true, prospect.getAccountTypeWanted(), 0.0));
+            boolean isUserExists = userService.checkEmailIdIfExists(prospect.getEmailId());
+            if(!isUserExists){
+                User isUserCreated = userService.addUser(prospect);
+                if(isUserCreated != null) {
+                    prospectService.updateProspectStatus(prospect.getProspectStatus(), prospect.getEmailId());
+                    newAccount = accountController.createAccount(new Account(isUserCreated, true, prospect.getAccountTypeWanted(), 0.0));
+                }
             }
+            else{
+                User userObj = userService.getUserByEmailId(prospect.getEmailId());
+                newAccount = accountController.createAccount(new Account(userObj,true, prospect.getAccountTypeWanted(), 0.0));
+            }
+
         }
 
         return new ResponseEntity<>(newAccount, HttpStatus.CREATED);
@@ -85,7 +91,12 @@ public class AdminController {
     @DeleteMapping("/deleteCustomer")
     public ResponseEntity<?> closeCustomerAccount(@RequestParam("userId") Long userId){
         double balance = userService.deleteCustomerAccount(userId);
-        return new ResponseEntity<>(balance, HttpStatus.ACCEPTED);
+        if(balance>=0){
+            return new ResponseEntity<>(new String("Account Closed\nCheque of $"+balance+" issued for User: "+userId), HttpStatus.ACCEPTED);
+        }
+        else {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
     }
 
     @GetMapping("/closeCustomers")
