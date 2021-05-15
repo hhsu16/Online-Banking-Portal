@@ -6,6 +6,7 @@ import web.api.models.Account;
 import web.api.models.Transaction;
 
 import java.util.ArrayList;
+import java.util.Date;
 import  java.util.List;
 
 
@@ -16,6 +17,8 @@ public interface TransactionRepository extends JpaRepository<Transaction, Long>
     List<Transaction> findTransactionsByAccountEquals(Account account);
 
     ArrayList<Transaction> findTransactionsByAccount_AccountNo(Long accountNo);
+
+    ArrayList<Transaction> findTransactionsByAccount_AccountNoAndTransactionDateAfterAndTransactionDateBefore(Long accountNo, Date fromDate, Date endDate);
 
     Transaction findTopByOrderByTransactionId();
 

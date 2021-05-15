@@ -18,14 +18,6 @@ public class BillerService {
         this.billerRepository = billerRepository;
     }
 
-    public Biller addBiller(Biller newBiller){
-        Biller p = null;
-        if(newBiller!=null){
-            p = billerRepository.save(newBiller);
-        }
-        return p;
-    }
-
     public List<Biller> getAllBillers(){
         return billerRepository.findAll();
     }

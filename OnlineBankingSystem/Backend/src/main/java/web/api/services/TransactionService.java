@@ -11,6 +11,7 @@ import web.api.repositories.AccountRepository;
 import web.api.repositories.TransactionRepository;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -45,6 +46,11 @@ public class TransactionService
      {
         List<Transaction> allTransactions = transactionRepository.findTransactionsByAccountEquals(account);
         return allTransactions;
+    }
+
+    public ArrayList<Transaction> filterAccountTransactions(Long accountNo, Date startDate, Date endDate){
+        return transactionRepository.findTransactionsByAccount_AccountNoAndTransactionDateAfterAndTransactionDateBefore
+                (accountNo, startDate, endDate);
     }
 
     public @Nullable Long getLatestTransactionId(){
