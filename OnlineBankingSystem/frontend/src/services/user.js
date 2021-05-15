@@ -1,24 +1,30 @@
 import axios from "axios";
-import authHeader from "./auth-header";
-
-const API_URL = "http://localhost:8080/api/test/";
+const token = JSON.parse(localStorage.getItem("token"));
+const user = JSON.parse(localStorage.getItem("user"));
+const API_URL = "http://localhost:8080/";
 
 class UserService {
-  getPublicContent() {
-    return axios.get(API_URL + "all");
+  viewAccounts() {
+    return axios.get(API_URL + `viewAccounts?userId=${user.userId}`, {
+      headers: {
+        "Access-Control-Allow-Origin": "*",
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
+        Authorization: "Bearer " + token,
+      },
+    });
   }
 
-  getUserBoard() {
-    return axios.get(API_URL + "user", { headers: authHeader() });
-  }
-
-  getModeratorBoard() {
-    return axios.get(API_URL + "mod", { headers: authHeader() });
-  }
-
-  getAdminBoard() {
-    return axios.get(API_URL + "admin", { headers: authHeader() });
-  }
+  // viewTransaction() {
+  //   return axios.get(API_URL + `viewTransactions?accountNo=${user.userId}`, {
+  //     headers: {
+  //       "Access-Control-Allow-Origin": "*",
+  //       "Content-Type": "application/json",
+  //       "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
+  //       Authorization: "Bearer " + token,
+  //     },
+  //   });
+  // }
 }
 
 export default new UserService();
