@@ -5,7 +5,7 @@ const API_URL = "http://localhost:8080/";
 
 class UserService {
   viewAccounts() {
-    return axios.get(API_URL + `viewAccounts?userId=3`, {
+    return axios.get(API_URL + `viewAccounts?userId=${user.userId}`, {
       headers: {
         "Access-Control-Allow-Origin": "*",
         "Content-Type": "application/json",
