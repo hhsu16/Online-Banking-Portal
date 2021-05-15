@@ -52,9 +52,13 @@ public class TransactionService
                 (accountNo, startDate, endDate);
     }
 
+    public ArrayList<Transaction> getAllUserTransactions(Long userId){
+        return transactionRepository.findTransactionsByAccount_User_UserId(userId);
+    }
+
     public @Nullable Long getLatestTransactionId(){
         Long l;
-       Transaction latestTran = transactionRepository.findTopByOrderByTransactionId();
+       Transaction latestTran = transactionRepository.findTopByOrderByTransactionIdDesc();
        if(latestTran==null){
            l = new Long(100000);
        }

@@ -64,18 +64,17 @@ public class AccountService {
     public int depositFundsIntoAccount(Long accountNo, double depositAmount){
         int status = 0;
         Long transactId = transactionService.getLatestTransactionId();
-        transactId += 1;
         String message = "Amount of $"+depositAmount+" deposited";
         Account userAccount = null;
         try{
             userAccount = accountRepository.findAccountByAccountNoEquals(accountNo);
             userAccount.setAccountBalance(userAccount.getAccountBalance()+depositAmount);
             accountRepository.save(userAccount);
-            transactionService.addTransaction(new Transaction(transactId, new Date(), message, TransactionType.CREDIT, depositAmount, TransactionStatus.SUCCESS, userAccount));
+            transactionService.addTransaction(new Transaction(++transactId, new Date(), message, TransactionType.CREDIT, depositAmount, TransactionStatus.SUCCESS, userAccount));
             status = 1;
         }
         catch(Exception e){
-            transactionService.addTransaction(new Transaction(transactId, new Date(), message, TransactionType.CREDIT, depositAmount, TransactionStatus.FAILED, userAccount));
+            transactionService.addTransaction(new Transaction(++transactId, new Date(), message, TransactionType.CREDIT, depositAmount, TransactionStatus.FAILED, userAccount));
             status = -99;
         }
         return status;

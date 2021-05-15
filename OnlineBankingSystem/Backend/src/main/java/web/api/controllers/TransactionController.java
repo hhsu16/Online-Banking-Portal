@@ -48,6 +48,12 @@ public class TransactionController
         return new ResponseEntity<>(transactionsList, HttpStatus.OK);
     }
 
+    @GetMapping("/userTransactions")
+    public ResponseEntity<?> getUserTransactions(@RequestParam("userId") Long userId){
+        List<Transaction> userTransactions = transactionService.getAllUserTransactions(userId);
+        return new ResponseEntity<>(userTransactions, HttpStatus.OK);
+    }
+
 
 
 }
