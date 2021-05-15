@@ -39,7 +39,7 @@
 
 * Database using Mysql
 
-* Scrum Management using Jira
+* Scrum Management using Google task sheets
 
 
 ## Architecture Diagram
