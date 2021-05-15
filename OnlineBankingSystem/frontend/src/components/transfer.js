@@ -5,6 +5,8 @@ import CheckButton from "react-validation/build/button";
 import DatePicker from "react-date-picker";
 
 import BankService from "../services/bank";
+import UserService from "../services/user";
+import BillerService from "../services/biller";
 
 const required = (value) => {
   if (!value) {
@@ -30,39 +32,12 @@ export class transfer extends Component {
     this.handleSubmitTransfer = this.handleSubmitTransfer.bind(this);
 
     this.state = {
-      amount: "",
+      accounts: [],
+      billers: [],
+      dummy: "",
       transferDate: new Date(),
       memo: "",
-
-      transferFromOptions: [
-        {
-          name: "Select…",
-          value: null,
-        },
-        {
-          name: "Saving",
-          value: "Saving",
-        },
-        {
-          name: "Checking",
-          value: "Checking",
-        },
-      ],
       transferFromValue: "?",
-      transferToOptions: [
-        {
-          name: "Select…",
-          value: null,
-        },
-        {
-          name: "Saving",
-          value: "Saving",
-        },
-        {
-          name: "Checking",
-          value: "Checking",
-        },
-      ],
       transferToValue: "?",
       repeatOptions: [
         {
@@ -70,8 +45,8 @@ export class transfer extends Component {
           value: null,
         },
         {
-          name: "one time",
-          value: "one time",
+          name: "oneTime",
+          value: "oneTime",
         },
         {
           name: "weekly",
@@ -81,16 +56,33 @@ export class transfer extends Component {
           name: "monthly",
           value: "monthly",
         },
-        {
-          name: "yearly",
-          value: "yearly",
-        },
       ],
       repeatOptionsValue: "?",
 
       successful: false,
       message: "",
     };
+  }
+
+  componentDidMount() {
+    UserService.viewAccounts().then((res) => {
+      localStorage.setItem("accounts", JSON.stringify(res.data));
+      let temp = res.data;
+      temp = temp.map((obj ) => {
+        console.log(obj.accountNo)
+        this.state.accounts.push(obj.accountNo)
+        this.setState({ state: this.state });
+      })
+    });
+
+    BillerService.viewPayees().then((res) => {
+      let payees = res.data;
+      payees.map((payee) => {
+        console.log(payee)
+        this.state.billers.push(payee)
+        this.setState({ state: this.state });
+      });
+    });
   }
 
   onChangeAmount(e) {
@@ -138,10 +130,13 @@ export class transfer extends Component {
     this.form.validateAll();
 
     if (this.checkBtn.context._errors.length === 0) {
-      BankService.externalTransfer(this.state.amount, this.state.memo).then(
+      BankService.submitPayment(this.state.transferFromValue, this.state.transferToValue, this.state.repeatOptionsValue, this.state.amount).then(
         (response) => {
+          if(response == "Fund transfer successful") {
+            alert("Fund transfer successful")
+          }
           this.setState({
-            message: response.data.message,
+            message: response.data,
             successful: true,
           });
         },
@@ -175,16 +170,17 @@ export class transfer extends Component {
             {!this.state.successful && (
               <div>
                 <div className="form-group">
-                  <label htmlFor="transferFrom">Transfer from</label>
+                  <label htmlFor="transferFrom">Select Account</label>
                   <div>
                     <select
                       className="form-control"
                       onChange={this.onChangeTransferFrom}
                       value={this.state.transferFromValue}
                     >
-                      {this.state.transferFromOptions.map((item) => (
-                        <option key={item.value} value={item.value}>
-                          {item.name}
+                       <option key="" value="">Select</option>
+                      {this.state.accounts.map((item) => (
+                        <option key={item} value={item}>
+                          {item}
                         </option>
                       ))}
                     </select>
@@ -193,16 +189,17 @@ export class transfer extends Component {
                 </div>
 
                 <div className="form-group">
-                  <label htmlFor="transferTo">Transfer to</label>
+                  <label htmlFor="transferTo">Select Payee</label>
                   <div>
                     <select
                       className="form-control"
                       onChange={this.onChangeTransferTo}
                       value={this.state.transferToValue}
                     >
-                      {this.state.transferToOptions.map((item) => (
-                        <option key={item.value} value={item.value}>
-                          {item.name}
+                      <option key="" value="">Select</option>
+                      {this.state.billers.map((item) => (
+                        <option key={item.payeeId} value={item.payeeId}>
+                          {item.payeeName}
                         </option>
                       ))}
                     </select>
@@ -211,18 +208,8 @@ export class transfer extends Component {
                 </div>
 
                 <div className="form-group">
-                  <label htmlFor="transferDate">Transfer date</label>
-                  <DatePicker
-                    onChange={this.onChangeTransferDate}
-                    value={this.state.transferDate}
-                    validations={[required]}
-                  />
-                  {/* <p>{JSON.stringify(this.state.dateOfBirth)}</p> */}
-                </div>
-
-                <div className="form-group">
                   <label htmlFor="repeatTransferType">
-                    Repeating transfer type
+                    Transfer type
                   </label>
                   <div>
                     <select
@@ -253,7 +240,7 @@ export class transfer extends Component {
                 </div>
 
                 <div className="form-group">
-                  <label htmlFor="firstname">Memo</label>
+                  <label htmlFor="firstname">Comments</label>
                   <Input
                     type="text"
                     className="form-control"

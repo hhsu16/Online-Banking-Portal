@@ -2,8 +2,11 @@ import React, { Component } from "react";
 import Form from "react-validation/build/form";
 import Input from "react-validation/build/input";
 import CheckButton from "react-validation/build/button";
+import DatePicker from "react-date-picker";
 
 import BankService from "../services/bank";
+import UserService from "../services/user";
+import BillerService from "../services/biller";
 
 const required = (value) => {
   if (!value) {
@@ -18,71 +21,105 @@ const required = (value) => {
 export class external extends Component {
   constructor(props) {
     super(props);
-    this.onChangeRoutingNumber = this.onChangeRoutingNumber.bind(this);
-    this.onChangeAccountNumber = this.onChangeAccountNumber.bind(this);
-    this.onChangeConfirmAccountNumber = this.onChangeConfirmAccountNumber.bind(
-      this
-    );
-    this.onChangeBankName = this.onChangeBankName.bind(this);
+    this.onChangeAmount = this.onChangeAmount.bind(this);
+    this.onChangeTransferDate = this.onChangeTransferDate.bind(this);
+    this.onChangeMemo = this.onChangeMemo.bind(this);
 
-    this.handleSubmitExternal = this.handleSubmitExternal.bind(this);
+    this.onChangeTransferFrom = this.onChangeTransferFrom.bind(this);
+    this.onChangeTransferTo = this.onChangeTransferTo.bind(this);
+    this.onChangeRepeatOptions = this.onChangeRepeatOptions.bind(this);
+
+    this.handleSubmitTransfer = this.handleSubmitTransfer.bind(this);
 
     this.state = {
-      routingNumber: "",
-      accountNumber: "",
-      confirmAccountNumber: "",
-      bankName: "",
-
-      accountType: [
+      accounts: [],
+      billers: [],
+      dummy: "",
+      transferDate: new Date(),
+      memo: "",
+      transferFromValue: "?",
+      transferToValue: "?",
+      repeatOptions: [
         {
           name: "Select…",
           value: null,
         },
         {
-          name: "Checking",
-          value: "Checking",
+          name: "oneTime",
+          value: "oneTime",
         },
         {
-          name: "Saving",
-          value: "Saving",
+          name: "weekly",
+          value: "weekly",
+        },
+        {
+          name: "monthly",
+          value: "monthly",
         },
       ],
-      accountTypeValue: "?",
+      repeatOptionsValue: "?",
 
       successful: false,
       message: "",
     };
   }
 
-  onChangeRoutingNumber(e) {
-    this.setState({
-      routingNumber: e.target.value,
+  componentDidMount() {
+    UserService.viewAccounts().then((res) => {
+      localStorage.setItem("accounts", JSON.stringify(res.data));
+      let temp = res.data;
+      temp = temp.map((obj ) => {
+        console.log(obj.accountNo)
+        this.state.accounts.push(obj.accountNo)
+        this.setState({ state: this.state });
+      })
     });
-  }
-  onChangeAccountNumber(e) {
-    this.setState({
-      accountNumber: e.target.value,
-    });
-  }
-  onChangeConfirmAccountNumber(e) {
-    this.setState({
-      confirmAccountNumber: e.target.value,
-    });
-  }
-  onChangeBankName(e) {
-    this.setState({
-      bankName: e.target.value,
+
+    BillerService.viewBillers().then((res) => {
+      let billers = res.data;
+      billers.map((biller) => {
+        console.log(biller.billerName)
+        this.state.billers.push(biller)
+        this.setState({ state: this.state });
+      });
     });
   }
 
-  onChangeAccountType = (e) => {
+  onChangeAmount(e) {
     this.setState({
-      accountTypeValue: e.target.value,
+      amount: e.target.value,
+    });
+  }
+  onChangeTransferDate(e) {
+    this.setState({
+      transferDate: new Date(),
+    });
+  }
+  onChangeMemo(e) {
+    this.setState({
+      memo: e.target.value,
+    });
+  }
+  onChangeTransferFrom(e) {
+    this.setState({
+      transferFromValue: e.target.value,
+    });
+  }
+
+  onChangeTransferTo = (e) => {
+    this.setState({
+      transferToValue: e.target.value,
+    });
+  };
+
+  onChangeRepeatOptions = (e) => {
+    this.setState({
+      repeatOptionsValue: e.target.value,
     });
   };
 
   // TO_DO: api call
-  handleSubmitExternal(e) {
+  handleSubmitTransfer(e) {
     e.preventDefault();
 
     this.setState({
@@ -93,14 +130,13 @@ export class external extends Component {
     this.form.validateAll();
 
     if (this.checkBtn.context._errors.length === 0) {
-      BankService.externalTransfer(
-        this.state.accountNumber,
-        this.state.routingNumber,
-        this.state.bankName
-      ).then(
+      BankService.submitBill(this.state.transferFromValue, this.state.transferToValue, this.state.repeatOptionsValue, this.state.amount).then(
         (response) => {
+          if(response == "Bill Payment successful") {
+            alert("Bill Payment Sucessful")
+          }
           this.setState({
-            message: response.data.message,
+            message: response.data,
             successful: true,
           });
         },
@@ -126,7 +162,7 @@ export class external extends Component {
       <div className="col-md-12">
         <div className="card-header">
           <Form
-            onSubmit={this.handleSubmitExternal}
+            onSubmit={this.handleSubmitTransfer}
             ref={(c) => {
               this.form = c;
             }}
@@ -134,67 +170,83 @@ export class external extends Component {
             {!this.state.successful && (
               <div>
                 <div className="form-group">
-                  <label htmlFor="firstname">Routing number</label>
-                  <Input
-                    type="text"
-                    className="form-control"
-                    name="routingNumber"
-                    value={this.state.routingNumber}
-                    onChange={this.onChangeRoutingNumber}
-                    validations={[required]}
-                  />
-                </div>
-
-                <div className="form-group">
-                  <label htmlFor="lastname">Account number</label>
-                  <Input
-                    type="text"
-                    className="form-control"
-                    name="accountNumber"
-                    value={this.state.accountNumber}
-                    onChange={this.onChangeAccountNumber}
-                    validations={[required]}
-                  />
-                </div>
-
-                <div className="form-group">
-                  <label htmlFor="email">Confirm account number</label>
-                  <Input
-                    type="text"
-                    className="form-control"
-                    name="confirmAccountNumber"
-                    value={this.state.confirmAccountNumber}
-                    onChange={this.onChangeConfirmAccountNumber}
-                    validations={[required]}
-                  />
-                </div>
-
-                <div className="form-group">
-                  <label htmlFor="accountType">Account type</label>
+                  <label htmlFor="transferFrom">Select Account</label>
                   <div>
                     <select
                       className="form-control"
-                      onChange={this.onChangeAccountType}
-                      value={this.state.accountTypeValue}
+                      onChange={this.onChangeTransferFrom}
+                      value={this.state.transferFromValue}
                     >
-                      {this.state.accountType.map((item) => (
+                       <option key="" value="">Select</option>
+                      {this.state.accounts.map((item) => (
+                        <option key={item} value={item}>
+                          {item}
+                        </option>
+                      ))}
+                    </select>
+                    {/* <p> data: {this.state.transferFromValue}</p> */}
+                  </div>
+                </div>
+
+                <div className="form-group">
+                  <label htmlFor="transferTo">Select Payee</label>
+                  <div>
+                    <select
+                      className="form-control"
+                      onChange={this.onChangeTransferTo}
+                      value={this.state.transferToValue}
+                    >
+                      <option key="" value="">Select</option>
+                      {this.state.billers.map((item) => (
+                        <option key={item.billerId} value={item.billerId}>
+                          {item.billerName}
+                        </option>
+                      ))}
+                    </select>
+                    {/* <p> data: {this.state.transferFromValue}</p> */}
+                  </div>
+                </div>
+
+                <div className="form-group">
+                  <label htmlFor="repeatTransferType">
+                    Transfer type
+                  </label>
+                  <div>
+                    <select
+                      className="form-control"
+                      onChange={this.onChangeRepeatOptions}
+                      value={this.state.repeatOptionsValue}
+                    >
+                      {this.state.repeatOptions.map((item) => (
                         <option key={item.value} value={item.value}>
                           {item.name}
                         </option>
                       ))}
                     </select>
-                    {/* <p>account type data: {this.state.accountTypeValue}</p> */}
+                    {/* <p> data: {this.state.transferFromValue}</p> */}
                   </div>
                 </div>
 
                 <div className="form-group">
-                  <label htmlFor="email">Bank name</label>
+                  <label htmlFor="tel">Amount</label>
+                  <Input
+                    type="tel"
+                    className="form-control"
+                    name="tel"
+                    onChange={this.onChangeAmount}
+                    value={this.state.amount}
+                    validations={[required]}
+                  />
+                </div>
+
+                <div className="form-group">
+                  <label htmlFor="firstname">Comments</label>
                   <Input
                     type="text"
                     className="form-control"
-                    name="bankName"
-                    value={this.state.bankName}
-                    onChange={this.onChangeBankName}
+                    name="firstname"
+                    value={this.state.memo}
+                    onChange={this.onChangeMemo}
                     validations={[required]}
                   />
                 </div>
