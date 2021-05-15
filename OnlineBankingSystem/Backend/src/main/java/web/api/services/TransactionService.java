@@ -33,7 +33,6 @@ public class TransactionService
 
         try {
             transactionRepository.save(transaction);
-            System.out.println("Transaction succeeded");
             return 1;
         }  catch(Exception e) {
             System.out.println(e);

@@ -64,7 +64,7 @@ public class AccountService {
     public int depositFundsIntoAccount(Long accountNo, double depositAmount){
         int status = 0;
         Long transactId = transactionService.getLatestTransactionId();
-        transactId++;
+        transactId += 1;
         String message = "Amount of $"+depositAmount+" deposited";
         Account userAccount = null;
         try{
