@@ -189,7 +189,7 @@ export class external extends Component {
                 </div>
 
                 <div className="form-group">
-                  <label htmlFor="transferTo">Select Payee</label>
+                  <label htmlFor="transferTo">Select Biller</label>
                   <div>
                     <select
                       className="form-control"

@@ -48,7 +48,7 @@ export class AdminDelete extends Component {
 
   deleteACustomer() {
     axios.delete(
-        `http://localhost:8080/deleteCustomer?userId=${this.state.ID}`,
+        `http://bankingapi-lb-1422585049.us-west-2.elb.amazonaws.com/deleteCustomer?userId=${this.state.ID}`,
         {
           headers: {
             "Access-Control-Allow-Origin": "*",

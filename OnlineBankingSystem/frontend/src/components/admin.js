@@ -32,7 +32,6 @@ export default class admin extends React.Component {
           id: [obj.prospectId],
           username: [obj.firstName] + " " + [obj.lastName],
           email: [obj.emailId],
-          password: [obj.password],
           dateOfBirth: JSON.stringify(obj.dateOfBirth).substring(1, 11),
           contact: [obj.contact],
           address: [obj.address],
@@ -70,7 +69,6 @@ export default class admin extends React.Component {
       { field: "id", headerName: "ID", width: 70 },
       { field: "username", headerName: "username", width: 120 },
       { field: "email", headerName: "email", width: 240 },
-      { field: "password", headerName: "password", width: 240 },
       { field: "dateOfBirth", headerName: "Birthday", width: 120 },
       { field: "contact", headerName: "Telephone", width: 120 },
       {

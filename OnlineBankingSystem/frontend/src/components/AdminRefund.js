@@ -84,7 +84,7 @@ export class AdminRefund extends Component {
   addRefund() {
     axios
       .put(
-        `http://localhost:8080/addRefund?accountNo=${this.state.ID}&amount=${this.state.amount}`,
+        `http://bankingapi-lb-1422585049.us-west-2.elb.amazonaws.com/addRefund?accountNo=${this.state.ID}&amount=${this.state.amount}`,
         {},
         {
           headers: {
@@ -125,7 +125,6 @@ export class AdminRefund extends Component {
                 <thead>
                   <tr>
                     <th scope="col">ID</th>
-                    <th scope="col">Account Status</th>
                     <th scope="col">Account type</th>
                     <th scope="col">Balance</th>
                     <th scope="col">Customer Name</th>
@@ -137,7 +136,6 @@ export class AdminRefund extends Component {
                 <tbody>
                   <tr>
                     <td>{obj.id}</td>
-                    <td>{obj.accountStatus}</td>
                     <td>{obj.accountType}</td>
                     <td>{obj.accountBalance}</td>
                     <td>{obj.username}</td>

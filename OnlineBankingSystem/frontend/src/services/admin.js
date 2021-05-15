@@ -1,7 +1,7 @@
 import axios from "axios";
 const token = JSON.parse(localStorage.getItem("token"));
 
-const API_URL = "http://localhost:8080/";
+const API_URL = "http://bankingapi-lb-1422585049.us-west-2.elb.amazonaws.com/";
 
 class UserService {
   getProspects() {
