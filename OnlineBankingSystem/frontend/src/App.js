@@ -12,6 +12,7 @@ import FilterView from "./components/filterView";
 import Transfer from "./components/transfer";
 import External from "./components/external";
 import Home from "./components/home";
+import ViewTransactions from "./components/ViewTransactions";
 
 import Profile from "./components/profile";
 import Admin from "./components/admin";
@@ -65,17 +66,28 @@ class App extends Component {
             )}
 
             {showCustomerBoard && (
-              <li className="nav-item">
-                <Link to={"/dashboard"} className="nav-link">
-                  Dashboard
-                </Link>
-                <Link to={"/transfer"} className="nav-link">
-                  Fund Transfer
-                </Link>
-                <Link to={"/external"} className="nav-link">
-                  Bill Payment
-                </Link>
-              </li>
+              <ul class="nav">
+                <li className="nav-item">
+                  <Link to={"/dashboard"} className="nav-link">
+                    Dashboard
+                  </Link>
+                </li>
+                <li>
+                  <Link to={"/viewTransactions"} className="nav-link">
+                    View Transactions
+                  </Link>
+                </li>
+                <li>
+                  <Link to={"/transfer"} className="nav-link">
+                    Fund Transfer
+                  </Link>
+                </li>
+                <li>
+                  <Link to={"/external"} className="nav-link">
+                    Bill Payment
+                  </Link>
+                </li>
+              </ul>
             )}
           </div>
 
@@ -121,6 +133,11 @@ class App extends Component {
             <Route exact path="/transfer" component={Transfer} />
             <Route exact path="/external" component={External} />
             <Route exact path="/filterView" component={FilterView} />
+            <Route
+              exact
+              path="/viewTransactions"
+              component={ViewTransactions}
+            />
 
             <Route exact path="/admin" component={Admin} />
 
