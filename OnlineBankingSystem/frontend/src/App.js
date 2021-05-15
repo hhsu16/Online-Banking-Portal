@@ -13,6 +13,7 @@ import External from "./components/external";
 import Home from "./components/home";
 import ViewTransactions from "./components/ViewTransactions";
 import AdminRefund from "./components/AdminRefund";
+import AdminDelete from "./components/AdminDelete";
 
 import Profile from "./components/profile";
 import Admin from "./components/admin";
@@ -65,6 +66,11 @@ class App extends Component {
                 <li className="nav-item">
                   <Link to={"/adminRefund"} className="nav-link">
                     View Customers
+                  </Link>
+                </li>
+                <li className="nav-item">
+                  <Link to={"/adminDelete"} className="nav-link">
+                    Close Customers
                   </Link>
                 </li>
               </ul>
@@ -134,6 +140,7 @@ class App extends Component {
 
             <Route exact path="/profile" component={Profile} />
             <Route exact path="/adminRefund" component={AdminRefund} />
+            <Route exact path="/adminDelete" component={AdminDelete} />
 
             <Route exact path="/dashboard" component={Dashboard} />
             <Route exact path="/transfer" component={Transfer} />
