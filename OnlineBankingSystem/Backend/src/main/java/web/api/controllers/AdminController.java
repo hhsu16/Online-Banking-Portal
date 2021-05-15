@@ -55,6 +55,7 @@ public class AdminController {
             }
             else{
                 User userObj = userService.getUserByEmailId(prospect.getEmailId());
+                prospectService.updateProspectStatus(prospect.getProspectStatus(), prospect.getEmailId());
                 newAccount = accountController.createAccount(new Account(userObj,true, prospect.getAccountTypeWanted(), 0.0));
             }
 
