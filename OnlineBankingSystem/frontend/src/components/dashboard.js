@@ -10,22 +10,26 @@ export class dashboard extends Component {
   }
 
   componentDidMount() {
-    UserService.viewAccounts().then((res) => {
-      localStorage.setItem("accounts", JSON.stringify(res.data));
+    UserService.viewAccounts()
+      .then((res) => {
+        localStorage.setItem("accounts", JSON.stringify(res.data));
 
-      let temp = res.data;
+        let temp = res.data;
 
-      temp = temp.map((obj) => {
-        return {
-          accountBalance: obj.accountBalance,
-          accountNo: obj.accountNo,
-          accountType: obj.accountType,
-        };
+        temp = temp.map((obj) => {
+          return {
+            accountBalance: obj.accountBalance,
+            accountNo: obj.accountNo,
+            accountType: obj.accountType,
+          };
+        });
+
+        this.setState({ accounts: temp });
+        console.log(this.state.accounts);
+      })
+      .catch((e) => {
+        console.log(e);
       });
-
-      this.setState({ accounts: temp });
-      console.log(this.state.accounts);
-    });
   }
 
   render() {

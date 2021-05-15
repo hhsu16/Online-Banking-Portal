@@ -15,16 +15,16 @@ class UserService {
     });
   }
 
-  // viewTransaction() {
-  //   return axios.get(API_URL + `viewTransactions?accountNo=${user.userId}`, {
-  //     headers: {
-  //       "Access-Control-Allow-Origin": "*",
-  //       "Content-Type": "application/json",
-  //       "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
-  //       Authorization: "Bearer " + token,
-  //     },
-  //   });
-  // }
+  viewTransaction() {
+    return axios.get(API_URL + `${user.userId}`, {
+      headers: {
+        "Access-Control-Allow-Origin": "*",
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
+        Authorization: "Bearer " + token,
+      },
+    });
+  }
 }
 
 export default new UserService();
