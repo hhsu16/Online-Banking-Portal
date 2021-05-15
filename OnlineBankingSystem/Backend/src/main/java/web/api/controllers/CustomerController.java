@@ -46,10 +46,10 @@ public class CustomerController {
             User userObj = userService.getUserFromUserId(userId);
             boolean updated = userService.changePassword(userObj, u.getPassword());
             if(updated){
-                responseEntity = new ResponseEntity<>(HttpStatus.ACCEPTED);
+                responseEntity = new ResponseEntity<>(new String("Password Updated"), HttpStatus.OK);
             }
             else{
-                responseEntity = new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+                responseEntity = new ResponseEntity<>(new String("Unable to update password"), HttpStatus.BAD_REQUEST);
             }
         }catch(Exception ex){
             new Exception("Password is not updated", ex);
@@ -72,7 +72,7 @@ public class CustomerController {
     }
 
     @PostMapping("/registerPayee")
-    public ResponseEntity<PayeeUserRelation> registerPayee(@RequestBody Payee requestedPayee, @RequestParam("userId") Long userId){
+    public ResponseEntity<?> registerPayee(@RequestBody Payee requestedPayee, @RequestParam("userId") Long userId){
         Payee addedPayee = null;
         PayeeUserRelation addedRelation = null;
         User requestedUser = userService.getUserFromUserId(userId);
@@ -95,10 +95,10 @@ public class CustomerController {
     public ResponseEntity<?> requestToCloseAccounts(@RequestParam("userId") Long userId){
         boolean status = userService.takeCustomerCloseRequest(userId);
         if(status){
-            return new ResponseEntity<>(HttpStatus.ACCEPTED);
+            return new ResponseEntity<>(new String("Accounts Closure Request accepted"), HttpStatus.ACCEPTED);
         }
         else{
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(new String("Unable to process request"), HttpStatus.BAD_REQUEST);
         }
     }
 }

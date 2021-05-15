@@ -141,4 +141,16 @@ public class UserService implements UserDetailsService{
         return status;
     }
 
+    public boolean checkEmailIdIfExists(String emailId){
+        boolean isEmailAvailable = false;
+        User userObj = userRepository.findUserByEmailIdEquals(emailId);
+        if(userObj == null){
+            isEmailAvailable = false;
+        }
+        else{
+            isEmailAvailable = true;
+        }
+        return isEmailAvailable;
+    }
+
 }

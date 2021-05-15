@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.*;
 import web.api.exceptions.InsufficientFundsException;
 import web.api.models.*;
 import web.api.services.AccountService;
-import web.api.services.TransactionService;
 
 import java.time.LocalDate;
 
@@ -17,12 +16,10 @@ import java.time.LocalDate;
 public class AccountController {
 
     private final AccountService accountService;
-    private final TransactionService transactionService;
 
     @Autowired
-    public AccountController(AccountService accountService, TransactionService transactionService){
+    public AccountController(AccountService accountService){
         this.accountService = accountService;
-        this.transactionService = transactionService;
     }
 
     public Account createAccount(Account newAccount){
@@ -34,10 +31,10 @@ public class AccountController {
             (@RequestParam("accountNo") Long accountNo,@RequestParam("billerId") Long billerId,@RequestParam("amount") double amount) throws InsufficientFundsException{
         int status = accountService.billPaymentToBillers(accountNo, billerId, amount);
         if(status == 1){
-            return new ResponseEntity<>(HttpStatus.ACCEPTED);
+            return new ResponseEntity<>(new String("Bill Payment successful"), HttpStatus.ACCEPTED);
         }
         else{
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(new String("Bill Payment failed"), HttpStatus.BAD_REQUEST);
         }
     }
 
@@ -47,10 +44,10 @@ public class AccountController {
 
         int status = accountService.transferFundsToPayees(accountNo, payeeId, amount);
         if(status == 1){
-            return new ResponseEntity<>(HttpStatus.ACCEPTED);
+            return new ResponseEntity<>(new String("Fund transfer successful"), HttpStatus.ACCEPTED);
         }
         else{
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(new String("Fund transfer failed"), HttpStatus.BAD_REQUEST);
         }
     }
 
@@ -59,10 +56,10 @@ public class AccountController {
             (@RequestParam("accountNo") Long accountNo, @RequestParam("payeeId") Long payeeId, @RequestParam("transferDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate transferDate, @RequestParam("transferAmount") double transferAmount){
         try{
             accountService.saveRecurringTransferRequest(accountNo, payeeId, transferDate, transferAmount);
-            return new ResponseEntity<>(HttpStatus.ACCEPTED);
+            return new ResponseEntity<>(new String("Recurring transfer request accepted"), HttpStatus.ACCEPTED);
         }
         catch(Exception ex){
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(new String("Unable to accept request"), HttpStatus.BAD_REQUEST);
         }
     }
 
@@ -70,10 +67,10 @@ public class AccountController {
     public ResponseEntity<?> setUpRecurringPayment(@RequestParam("accountNo") Long accountNo, @RequestParam("billerId") Long billerId, @RequestParam("paymentDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate paymentDate, @RequestParam("paymentAmount") double paymentAmount){
         try{
             accountService.saveRecurringPaymentRequest(accountNo, billerId, paymentDate, paymentAmount);
-            return new ResponseEntity<>(HttpStatus.ACCEPTED);
+            return new ResponseEntity<>(new String("Recurring payment request accepted"), HttpStatus.ACCEPTED);
         }
         catch(Exception ex){
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(new String("Unable to accept request"), HttpStatus.BAD_REQUEST);
         }
     }
 
@@ -83,10 +80,10 @@ public class AccountController {
         try{
             int status = accountService.depositFundsIntoAccount(accountNo, depositAmount);
             if(status == 1){
-                response = new ResponseEntity<>(HttpStatus.ACCEPTED);
+                response = new ResponseEntity<>(new String("Funds deposited successfully"), HttpStatus.ACCEPTED);
             }
         }catch(Exception ex){
-            response = new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+            response = new ResponseEntity<>(new String("Unable to deposit funds"), HttpStatus.INTERNAL_SERVER_ERROR);
         }
         return response;
     }
@@ -97,10 +94,10 @@ public class AccountController {
         try{
             int status = accountService.withdrawFundsFromAccount(accountNo, withdrawAmount);
             if(status == 1){
-                response = new ResponseEntity<>(HttpStatus.ACCEPTED);
+                response = new ResponseEntity<>(new String("Funds Withdrawal successful"), HttpStatus.ACCEPTED);
             }
         }catch(Exception ex){
-            response = new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+            response = new ResponseEntity<>(new String("Funds Withdrawal failed"), HttpStatus.INTERNAL_SERVER_ERROR);
         }
         return response;
     }
@@ -111,10 +108,10 @@ public class AccountController {
         try{
             int status = accountService.depositRefundFees(accountNo, refundFee);
             if(status == 1){
-                response = new ResponseEntity<>(HttpStatus.ACCEPTED);
+                response = new ResponseEntity<>(new String("Refund of $"+refundFee+" processed to Account: "+accountNo),HttpStatus.ACCEPTED);
             }
         }catch(Exception ex){
-            response = new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+            response = new ResponseEntity<>(new String("Refund processing failed"), HttpStatus.INTERNAL_SERVER_ERROR);
         }
         return response;
     }

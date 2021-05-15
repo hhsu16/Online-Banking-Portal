@@ -51,8 +51,14 @@ public class UserController {
     }
 
     @PostMapping("/signup")
-    public ResponseEntity<Prospect> getUsers(@RequestBody Prospect newProspect) {
+    public ResponseEntity<?> getUsers(@RequestBody Prospect newProspect) {
         Prospect object = prospectService.addProspect(newProspect);
-        return new ResponseEntity<>(object, HttpStatus.CREATED);
+        if(object!=null){
+            return new ResponseEntity<>(new String("Registration Successful"), HttpStatus.CREATED);
+        }
+        else{
+            return new ResponseEntity<>(new String("Registration Failed"), HttpStatus.BAD_REQUEST);
+        }
+
     }
 }
