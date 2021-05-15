@@ -9,20 +9,52 @@ export class ViewTransactions extends Component {
     super(props);
 
     this.state = {
-      accounts: [{}],
+      transcations: [],
 
-      rows: [
-        { id: 1, amount: 50, accountType: "Checking" },
-        { id: 2, amount: 500, accountType: "Saving" },
-        { id: 3, amount: 100, accountType: "Checking" },
-      ],
       columns: [
-        { field: "id", headerName: "Account Number", width: 200 },
-        { field: "accountType", headerName: "Account Type", width: 200 },
         {
-          field: "amount",
+          field: "id",
           type: "number",
-          headerName: "Account Amount",
+          headerName: "ID",
+          width: 70,
+        },
+        {
+          field: "accountNo",
+          type: "number",
+          headerName: "Account",
+          width: 150,
+        },
+        {
+          field: "transactionId",
+          type: "number",
+          headerName: "Transaction ID",
+          width: 200,
+        },
+        {
+          field: "transactionDate",
+          type: "date",
+          headerName: "Transaction Date",
+          width: 200,
+        },
+        {
+          field: "description",
+          headerName: "Description",
+          width: 200,
+        },
+        {
+          field: "transactionType",
+          headerName: "Transaction Type",
+          width: 200,
+        },
+        {
+          field: "transactionStatus",
+          headerName: "Transaction Status",
+          width: 200,
+        },
+        {
+          field: "transactionAmount",
+          type: "number",
+          headerName: "Amount",
           width: 200,
         },
       ],
@@ -32,41 +64,41 @@ export class ViewTransactions extends Component {
   componentDidMount() {
     UserService.viewTransaction()
       .then((res) => {
-        let temp = res.data;
+        // this.setState({ transcations: res.data }, () => {
+        //   console.log(this.state.transcations, "transcations");
+        // });
 
-        temp = temp.map((obj) => {
-          return {
-            accountBalance: obj.accountBalance,
-            accountNo: obj.accountNo,
-            accountType: obj.accountType,
-          };
+        let temp = res.data;
+        let arr = [];
+        temp.map((obj) => {
+          arr.push({
+            id: obj.tId,
+            accountNo: obj.account.accountNo,
+            transactionId: obj.transactionId,
+            transactionDate: obj.transactionDate,
+            description: obj.description,
+            transactionType: obj.transactionType,
+            transactionStatus: obj.transactionStatus,
+            transactionAmount: obj.transactionAmount,
+          });
         });
 
-        this.setState({ accounts: temp });
-        console.log(this.state.accounts);
+        this.setState({ transcations: arr }, () => {
+          console.log(this.state.transcations, "transcations");
+        });
 
-        // var i;
-        // for(i = 0; i < arrayObj.length; i++){
-        //     arrayObj[i].stroke = arrayObj[i]['key1'];
-        //     delete arrayObj[i].key1;
-        // }
+        // console.log(this.state.transcations, "Final transcations");
       })
       .catch((e) => {
         console.log(e);
       });
-
-    let temp = localAccounts;
-    temp.map((obj) => {
-      this.state.accounts.push(obj.accountNo);
-      // console.log(this.state.accounts);
-    });
   }
 
   render() {
     return (
       <div style={{ height: 400, width: "100%" }}>
         <DataGrid
-          rows={this.state.rows}
+          rows={this.state.transcations}
           columns={this.state.columns}
           pageSize={5}
           checkboxSelection={false}
