@@ -159,7 +159,6 @@ public class AccountService {
         int result = 0;
         Account userAccount = getAccount(accountNo);
         Biller biller = billerService.fetchBiller(billerId);
-        Account billerAccount = getAccount(biller.getBillerAccount().getAccountNo());
         if(paymentAmount <= userAccount.getAccountBalance()){
             Long transactId = transactionService.getLatestTransactionId();
             transactId++;
@@ -167,10 +166,6 @@ public class AccountService {
             userAccount.setAccountBalance(userAccount.getAccountBalance()-paymentAmount);
             accountRepository.save(userAccount);
             transactionService.addTransaction(new Transaction(transactId, new Date(), message, TransactionType.DEBIT, paymentAmount, TransactionStatus.SUCCESS, userAccount));
-            billerAccount.setAccountBalance(billerAccount.getAccountBalance()+paymentAmount);
-            accountRepository.save(billerAccount);
-            String billerMessage = "Bill payment of $"+paymentAmount+" received from "+userAccount.getUser().getFirstName();
-            transactionService.addTransaction(new Transaction(transactId, new Date(), billerMessage, TransactionType.CREDIT, paymentAmount, TransactionStatus.SUCCESS, billerAccount));
             result = 1;
         }
         else{
