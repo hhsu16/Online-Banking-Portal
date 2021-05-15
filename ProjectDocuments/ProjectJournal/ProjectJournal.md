@@ -7,7 +7,6 @@ Project Journal
     
 ## Week 1:
 
-### Minutes of the Meeting
 
 #### Vamsi
   Q1 => Read the project requirements, setup github project    
@@ -30,16 +29,16 @@ Project Journal
   Q3 => No blockers   
     
 ## Week 2:
-### Minutes of the Meeting
+
 
 #### Vamshi
   Q1 => Read the project requirements, setup github project    
-  Q2 =>  Started working on Registration Module   
+  Q2 => Finalised Tech stack, Started working on Login Module   
   Q3 => No blockers     
     
 #### Shreshta
   Q1 => Read the project requirements, setup github project    
-  Q2 => Discussed and finalised Design      
+  Q2 => Finalised Tech stack and started working on registration module     
   Q3 => No blockers  
 
 #### Kevin
@@ -54,16 +53,16 @@ Project Journal
 
 
 ## Week 3:
-### Minutes of the Meeting
+
 
 #### Vamshi
   Q1 => Read the project requirements, setup github project    
-  Q2 =>  Discussed and finalised Design    
+  Q2 =>  Tested Login module , fixed issues, got reviewwd by the team    
   Q3 => No blockers     
     
 #### Shreshta
   Q1 => Read the project requirements, setup github project    
-  Q2 => Worked on Transaction module      
+  Q2 => Tested Registration module , fixed issues, got reviewed by the team,      
   Q3 => No blockers  
 
 #### Kevin
@@ -78,7 +77,7 @@ Project Journal
 
 
   ## Week 4:
-### Minutes of the Meeting
+
 
 #### Vamshi
   Q1 => Read the project requirements, setup github project    
@@ -87,7 +86,7 @@ Project Journal
     
 #### Shreshta
   Q1 => Read the project requirements, setup github project    
-  Q2 => Worked on AddBillers Module     
+  Q2 => Started working on Transaction module,     
   Q3 => No blockers  
 
 #### Kevin
@@ -99,4 +98,76 @@ Project Journal
   Q1 => Read the project requirements, setup github project    
   Q2 => Discussed and finalised Design      
   Q3 => No blockers   
+
+
+  ## Week 5:
+
+
+#### Vamshi
+  Q1 => Read the project requirements, setup github project    
+  Q2 =>  Discussed and finalised Design    
+  Q3 => No blockers     
+    
+#### Shreshta
+  Q1 => Read the project requirements, setup github project    
+  Q2 => Tested Transaction modulem fixed isses, got reviewd by the team,      
+  Q3 => No blockers  
+
+#### Kevin
+  Q1 => Read the project requirements, setup github project    
+  Q2 => Discussed and finalised Design      
+  Q3 => No blockers   
+
+#### Tejas
+  Q1 => Read the project requirements, setup github project    
+  Q2 => Discussed and finalised Design      
+  Q3 => No blockers   
+
+
+## Week 6:
+
+
+#### Vamshi
+  Q1 => Read the project requirements, setup github project    
+  Q2 =>  Discussed and finalised Design    
+  Q3 => No blockers     
+    
+#### Shreshta
+  Q1 => Read the project requirements, setup github project    
+  Q2 => Worked on Billers Module     
+  Q3 => No blockers  
+
+#### Kevin
+  Q1 => Read the project requirements, setup github project    
+  Q2 => Discussed and finalised Design      
+  Q3 => No blockers   
+
+#### Tejas
+  Q1 => Read the project requirements, setup github project    
+  Q2 => Discussed and finalised Design      
+  Q3 => No blockers   
+
+
+## Week 7:
+
+#### Vamshi
+  Q1 => Read the project requirements, setup github project    
+  Q2 =>  Discussed and finalised Design    
+  Q3 => No blockers     
+    
+#### Shreshta
+  Q1 => Read the project requirements, setup github project    
+  Q2 => Worked on Documentation    
+  Q3 => No blockers  
+
+#### Kevin
+  Q1 => Read the project requirements, setup github project    
+  Q2 => Discussed and finalised Design      
+  Q3 => No blockers   
+
+#### Tejas
+  Q1 => Read the project requirements, setup github project    
+  Q2 => Discussed and finalised Design      
+  Q3 => No blockers   
+
 
