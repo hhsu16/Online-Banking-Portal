@@ -42,7 +42,9 @@
 * Scrum Management using Jira
 
 
-## Architectural Diagram
+## Architecture Diagram
+
+![Architecture Diagram](ProjectDocuments/Architecture.png)
 
 
 ## XP Core Values Implemented:
