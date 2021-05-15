@@ -66,6 +66,17 @@ class AuthService {
       },
     });
   }
+
+  viewCloseCustomers() {
+    return axios.get(API_URL + "closeCustomers", {
+      headers: {
+        "Access-Control-Allow-Origin": "*",
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
+        Authorization: "Bearer " + token,
+      },
+    });
+  }
 }
 
 export default new AuthService();
