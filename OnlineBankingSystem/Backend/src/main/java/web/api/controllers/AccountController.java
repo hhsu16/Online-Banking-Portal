@@ -53,9 +53,9 @@ public class AccountController {
 
     @PostMapping("/recurringTransfer")
     public ResponseEntity<?> setUpRecurringTransfer
-            (@RequestParam("accountNo") Long accountNo, @RequestParam("payeeId") Long payeeId, @RequestParam("transferDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate transferDate, @RequestParam("transferAmount") double transferAmount){
+            (@RequestBody AcceptRecurringTransfer recurringTransfer){
         try{
-            accountService.saveRecurringTransferRequest(accountNo, payeeId, transferDate, transferAmount);
+            accountService.saveRecurringTransferRequest(recurringTransfer.getAccountNo(), recurringTransfer.getPayeeId(), recurringTransfer.getTransferDate(), recurringTransfer.getTransferAmount());
             return new ResponseEntity<>(new String("Recurring transfer request accepted"), HttpStatus.ACCEPTED);
         }
         catch(Exception ex){
@@ -64,9 +64,9 @@ public class AccountController {
     }
 
     @PostMapping("/recurringPayment")
-    public ResponseEntity<?> setUpRecurringPayment(@RequestParam("accountNo") Long accountNo, @RequestParam("billerId") Long billerId, @RequestParam("paymentDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate paymentDate, @RequestParam("paymentAmount") double paymentAmount){
+    public ResponseEntity<?> setUpRecurringPayment(@RequestBody AcceptRecurringPayment recurringPayment){
         try{
-            accountService.saveRecurringPaymentRequest(accountNo, billerId, paymentDate, paymentAmount);
+            accountService.saveRecurringPaymentRequest(recurringPayment.getAccountNo(), recurringPayment.getBillerId(), recurringPayment.getPaymentDate(), recurringPayment.getPaymentAmount());
             return new ResponseEntity<>(new String("Recurring payment request accepted"), HttpStatus.ACCEPTED);
         }
         catch(Exception ex){
