@@ -72,7 +72,7 @@ Project Journal
 
 #### Tejas
   Q1 =>  Research continued on ReactJS  
-  Q2 => No Blockers
+  Q3 => No Blockers
   
 
   ## Week 4:
@@ -95,7 +95,7 @@ Project Journal
 
 #### Tejas
   Q1 => Started implementation of the alternate admin module
-  Q2 => No Blockers
+  Q3 => No Blockers
   
 
   ## Week 5:
@@ -118,7 +118,7 @@ Project Journal
 
 #### Tejas
   Q1 => Implemented alternate admin interface  
-  Q2 => No Blockers    
+  Q3 => No Blockers    
   
 
 
