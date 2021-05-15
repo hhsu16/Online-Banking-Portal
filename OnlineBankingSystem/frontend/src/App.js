@@ -8,16 +8,14 @@ import AuthService from "./services/auth";
 import Login from "./components/login";
 import Register from "./components/register";
 import Dashboard from "./components/dashboard";
-import FilterView from "./components/filterView";
 import Transfer from "./components/transfer";
 import External from "./components/external";
 import Home from "./components/home";
 import ViewTransactions from "./components/ViewTransactions";
+import AdminRefund from "./components/AdminRefund";
 
 import Profile from "./components/profile";
 import Admin from "./components/admin";
-// import BoardUser from "./components/board-user";
-// import BoardAdmin from "./components/board-admin";
 
 class App extends Component {
   constructor(props) {
@@ -58,11 +56,18 @@ class App extends Component {
           </Link>
           <div className="navbar-nav mr-auto">
             {showAdminBoard && (
-              <li className="nav-item">
-                <Link to={"/admin"} className="nav-link">
-                  Admin Board
-                </Link>
-              </li>
+              <ul class="nav">
+                <li className="nav-item">
+                  <Link to={"/admin"} className="nav-link">
+                    View Prospects
+                  </Link>
+                </li>
+                <li className="nav-item">
+                  <Link to={"/adminRefund"} className="nav-link">
+                    View Customers
+                  </Link>
+                </li>
+              </ul>
             )}
 
             {showCustomerBoard && (
@@ -128,11 +133,11 @@ class App extends Component {
             <Route exact path="/register" component={Register} />
 
             <Route exact path="/profile" component={Profile} />
+            <Route exact path="/adminRefund" component={AdminRefund} />
 
             <Route exact path="/dashboard" component={Dashboard} />
             <Route exact path="/transfer" component={Transfer} />
             <Route exact path="/external" component={External} />
-            <Route exact path="/filterView" component={FilterView} />
             <Route
               exact
               path="/viewTransactions"

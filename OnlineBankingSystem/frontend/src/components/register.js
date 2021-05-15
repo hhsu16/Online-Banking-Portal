@@ -133,9 +133,9 @@ export default class Register extends Component {
     });
   }
 
-  onChangeDateOfBirth() {
+  onChangeDateOfBirth(value) {
     this.setState({
-      dateOfBirth: new Date(),
+      dateOfBirth: value,
     });
   }
 
@@ -280,6 +280,7 @@ export default class Register extends Component {
                     onChange={this.onChangeDateOfBirth}
                     value={this.state.dateOfBirth}
                     validations={[required]}
+                    required={true}
                   />
                 </div>
 
@@ -309,7 +310,7 @@ export default class Register extends Component {
                         </option>
                       ))}
                     </select>
-                    <p>Country data: {this.state.accountValue}</p>
+                    {/* <p>Country data: {this.state.accountValue}</p> */}
                   </div>
                 </div>
 

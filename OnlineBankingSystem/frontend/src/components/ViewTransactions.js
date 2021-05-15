@@ -1,16 +1,12 @@
 import React, { Component } from "react";
 import { DataGrid } from "@material-ui/data-grid";
 import UserService from "../services/user";
-
-const localAccounts = JSON.parse(localStorage.getItem("accounts"));
-
 export class ViewTransactions extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
       transcations: [],
-
       columns: [
         {
           field: "id",
@@ -64,10 +60,6 @@ export class ViewTransactions extends Component {
   componentDidMount() {
     UserService.viewTransaction()
       .then((res) => {
-        // this.setState({ transcations: res.data }, () => {
-        //   console.log(this.state.transcations, "transcations");
-        // });
-
         let temp = res.data;
         let arr = [];
         temp.map((obj) => {
@@ -86,8 +78,6 @@ export class ViewTransactions extends Component {
         this.setState({ transcations: arr }, () => {
           console.log(this.state.transcations, "transcations");
         });
-
-        // console.log(this.state.transcations, "Final transcations");
       })
       .catch((e) => {
         console.log(e);

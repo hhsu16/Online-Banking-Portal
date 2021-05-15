@@ -1,5 +1,5 @@
 import axios from "axios";
-
+const token = JSON.parse(localStorage.getItem("token"));
 const API_URL = "http://localhost:8080/";
 
 class AuthService {
@@ -53,6 +53,17 @@ class AuthService {
 
   getCurrentUser() {
     return JSON.parse(localStorage.getItem("user"));
+  }
+
+  viewCustomerAccounts() {
+    return axios.get(API_URL + "viewCustomerAccounts", {
+      headers: {
+        "Access-Control-Allow-Origin": "*",
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
+        Authorization: "Bearer " + token,
+      },
+    });
   }
 }
 
