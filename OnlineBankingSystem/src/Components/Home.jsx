@@ -45,7 +45,7 @@ class Home extends Component {
     }
   }
   async onClicked() {
-    let getData = await axios.get("http://bankingapi-lb-1422585049.us-west-2.elb.amazonaws.com/prospects");
+    let getData = await axios.get("https://jsonplaceholder.typicode.com/users");
     this.setState({
       data: getData.data,
       tempData: getData.data,
