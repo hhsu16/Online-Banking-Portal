@@ -18,7 +18,7 @@ class UserService {
   viewTransaction() {
     console.log(user.userId);
 
-    return axios.get(API_URL + `userTransactions?userId=${user.userId}`, {
+    return axios.get("http://localhost:8080/" + `userTransactions?userId=${user.userId}`, {
       headers: {
         "Access-Control-Allow-Origin": "*",
         "Content-Type": "application/json",
