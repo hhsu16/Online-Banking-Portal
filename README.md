@@ -45,6 +45,7 @@
 ## Architecture Diagram
 
 ![Architecture Diagram](ProjectDocuments/Architecture.png)
+![DataBase Diagram](/ProjectDocuments/TestScreenshots/Database_diagram.jpg)
 
 
 ## XP Core Values Implemented:
@@ -78,4 +79,8 @@ feedback from the team.
 
 
 ## Screenshots
-
+![Signup](/ProjectDocuments/TestScreenshots/SignUp.jpg)
+![Login_admin](/ProjectDocuments/TestScreenshots/Login_Admin.jpg )
+![Login_customer](/ProjectDocuments/TestScreenshots/Login_Customer.jpg)
+![Approve_New_Customer](/ProjectDocuments/TestScreenshots/Approve_New_Customer.jpg)
+![Account_opening_Request](/ProjectDocuments/TestScreenshots/Account_Opening_Requests.jpg)
