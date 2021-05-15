@@ -2,12 +2,22 @@ import React, { Component } from "react";
 import { DataGrid } from "@material-ui/data-grid";
 import AuthService from "../services/auth";
 
+import axios from "axios";
+
+const token = JSON.parse(localStorage.getItem("token"));
+
 export class AdminRefund extends Component {
   constructor(props) {
     super(props);
 
+    this.handleChangeID = this.handleChangeID.bind(this);
+    this.handleChangeAmount = this.handleChangeAmount.bind(this);
+
+    this.addRefund = this.addRefund.bind(this);
+
     this.state = {
-      selectedUser: "",
+      ID: "",
+      amount: "",
       customers: [],
       columns: [
         {
@@ -41,6 +51,17 @@ export class AdminRefund extends Component {
     };
   }
 
+  handleChangeID(e) {
+    this.setState({ ID: e.target.value }, () => {
+      console.log(this.state.ID);
+    });
+  }
+  handleChangeAmount(e) {
+    this.setState({ amount: e.target.value }, () => {
+      console.log(this.state.amount);
+    });
+  }
+
   componentDidMount() {
     AuthService.viewCustomerAccounts().then((res) => {
       let temp = res.data;
@@ -60,6 +81,34 @@ export class AdminRefund extends Component {
     });
   }
 
+  addRefund() {
+    axios
+      .put(
+        `http://localhost:8080/addRefund?accountNo=${this.state.ID}&amount=${this.state.amount}`,
+        {},
+        {
+          headers: {
+            "Access-Control-Allow-Origin": "*",
+            "Content-Type": "application/json",
+            "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
+            Authorization: "Bearer " + token,
+          },
+        }
+      )
+      .then((res) => {
+        if (res.status === 202) {
+          alert("Refund Success!");
+          window.location.reload();
+        } else {
+          alert("Refund reject!");
+          window.location.reload();
+        }
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  }
+
   render() {
     return (
       <div style={{ height: 400, width: "100%" }}>
@@ -68,10 +117,32 @@ export class AdminRefund extends Component {
           columns={this.state.columns}
           pageSize={5}
           checkboxSelection={false}
-          onRowSelected={(u) => {
-            this.setState({ selectedUser: u });
-          }}
+          disableSelectionOnClick={true}
+          disableColumnSelector={true}
+          disableColumnMenu={true}
         />
+        <label>Refund Fees: </label>
+
+        <div>
+          <label>ID</label>
+          <input
+            type="number"
+            onChange={(e) => {
+              this.handleChangeID(e);
+            }}
+          ></input>
+        </div>
+        <div>
+          <label>Amount</label>
+          <input
+            type="number"
+            onChange={(e) => {
+              this.handleChangeAmount(e);
+            }}
+          ></input>
+        </div>
+
+        <button onClick={this.addRefund}>Process Refund</button>
       </div>
     );
   }
