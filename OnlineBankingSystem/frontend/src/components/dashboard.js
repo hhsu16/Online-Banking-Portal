@@ -36,9 +36,7 @@ export class dashboard extends Component {
     return (
       <div>
         <div>
-          {this.state.accounts.map((obj) => {
-            return (
-              <table class="table">
+        <table class="table">
                 <thead>
                   <tr>
                     <th scope="col">Account Number</th>
@@ -46,6 +44,8 @@ export class dashboard extends Component {
                     <th scope="col">Account Balance</th>
                   </tr>
                 </thead>
+          {this.state.accounts.map((obj) => {
+            return (
                 <tbody>
                   <tr>
                     <td>{obj.accountNo}</td>
@@ -53,9 +53,9 @@ export class dashboard extends Component {
                     <td>{obj.accountBalance}</td>
                   </tr>
                 </tbody>
-              </table>
             );
           })}
+          </table>
         </div>
       </div>
     );

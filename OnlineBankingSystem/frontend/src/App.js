@@ -17,6 +17,7 @@ import Deleteuser from "./components/deleteuser";
 
 import Profile from "./components/profile";
 import Admin from "./components/admin";
+import Addpayee from "./components/addPayee";
 
 class App extends Component {
   constructor(props) {
@@ -94,6 +95,11 @@ class App extends Component {
                   </Link>
                 </li>
                 <li>
+                  <Link to={"/addpayee"} className="nav-link">
+                    Add Payee
+                  </Link>
+                </li>
+                <li>
                   <Link to={"/delete"} className="nav-link">
                     Delete Account
                   </Link>
@@ -142,6 +148,8 @@ class App extends Component {
             <Route exact path="/adminRefund" component={AdminRefund} />
 
             <Route exact path="/delete" component={Deleteuser} />
+            <Route exact path="/addpayee" component={Addpayee} />
+            
 
             <Route exact path="/dashboard" component={Dashboard} />
             <Route exact path="/transfer" component={Transfer} />

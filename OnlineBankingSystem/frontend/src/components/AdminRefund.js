@@ -112,15 +112,40 @@ export class AdminRefund extends Component {
   render() {
     return (
       <div style={{ height: 400, width: "100%" }}>
-        <DataGrid
+        {/* <DataGrid
           rows={this.state.customers}
           columns={this.state.columns}
-          pageSize={5}
+          pageSize={8}
           checkboxSelection={false}
           disableSelectionOnClick={true}
           disableColumnSelector={true}
           disableColumnMenu={true}
-        />
+        /> */}
+      <table class="table">
+                <thead>
+                  <tr>
+                    <th scope="col">ID</th>
+                    <th scope="col">Account Status</th>
+                    <th scope="col">Account type</th>
+                    <th scope="col">Balance</th>
+                    <th scope="col">Customer Name</th>
+                  </tr>
+                </thead>
+      {this.state.customers.map((obj) => {
+            return (
+              
+                <tbody>
+                  <tr>
+                    <td>{obj.id}</td>
+                    <td>{obj.accountStatus}</td>
+                    <td>{obj.accountType}</td>
+                    <td>{obj.accountBalance}</td>
+                    <td>{obj.username}</td>
+                  </tr>
+                </tbody>
+            );
+          })}
+          </table>
         <label>Refund Fees: </label>
 
         <div>
