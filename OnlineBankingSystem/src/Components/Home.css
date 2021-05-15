@@ -1,0 +1,23 @@
+body {
+  margin: 0;
+  padding: 0;
+}
+.MainContanier {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  flex-flow: nowrap column;
+  overflow: hidden;
+}
+.Scrolling {
+  scroll-behavior: smooth;
+  overflow-y: scroll;
+  height: 80vh;
+}
+.Scrolling2 {
+  scroll-behavior: smooth;
+  overflow-x: scroll;
+  overflow-y: scroll;
+  height: 80vh;
+  width: 200pt;
+}
