@@ -11,8 +11,6 @@ import web.api.repositories.TransactionRepository;
 import web.api.services.AccountService;
 import web.api.services.TransactionService;
 
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -48,6 +46,12 @@ public class TransactionController
         List<Transaction> transactionsList = transactionRepository.findAll();
 
         return new ResponseEntity<>(transactionsList, HttpStatus.OK);
+    }
+
+    @GetMapping("/userTransactions")
+    public ResponseEntity<?> getUserTransactions(@RequestParam("userId") Long userId){
+        List<Transaction> userTransactions = transactionService.getAllUserTransactions(userId);
+        return new ResponseEntity<>(userTransactions, HttpStatus.OK);
     }
 
 

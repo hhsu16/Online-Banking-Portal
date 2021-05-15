@@ -18,9 +18,11 @@ public interface TransactionRepository extends JpaRepository<Transaction, Long>
 
     ArrayList<Transaction> findTransactionsByAccount_AccountNo(Long accountNo);
 
+    ArrayList<Transaction> findTransactionsByAccount_User_UserId(Long userId);
+
     ArrayList<Transaction> findTransactionsByAccount_AccountNoAndTransactionDateAfterAndTransactionDateBefore(Long accountNo, Date fromDate, Date endDate);
 
-    Transaction findTopByOrderByTransactionId();
+    Transaction findTopByOrderByTransactionIdDesc();
 
 }
 
