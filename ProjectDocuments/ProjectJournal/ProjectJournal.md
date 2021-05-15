@@ -47,9 +47,9 @@ Project Journal
   Q3 => 
 
 #### Tejas
-  Q1 => 
-  Q2 =>    
-  Q3 =>  
+  Q1 => Worked with the team to finalize the tech stack
+  Q2 => Started research on ReactJS   
+  Q3 => No Blockers
 
 
 ## Week 3:
@@ -71,10 +71,9 @@ Project Journal
   Q3 => 
 
 #### Tejas
-  Q1 =>     
-  Q2 => 
-  Q3 =>
-
+  Q1 =>  Research continued on ReactJS  
+  Q2 => No Blockers
+  
 
   ## Week 4:
 
@@ -95,10 +94,9 @@ Project Journal
   Q3 =>    
 
 #### Tejas
-  Q1 => 
-  Q2 => 
-  Q3 =>   
-
+  Q1 => Started implementation of the alternate admin module
+  Q2 => No Blockers
+  
 
   ## Week 5:
 
@@ -119,9 +117,9 @@ Project Journal
   Q3 => 
 
 #### Tejas
-  Q1 =>   
-  Q2 =>     
-  Q3 =>   
+  Q1 => Implemented alternate admin interface  
+  Q2 => No Blockers    
+  
 
 
 ## Week 6:
@@ -143,9 +141,9 @@ Project Journal
   Q3 => 
 
 #### Tejas
-  Q1 =>    
-  Q2 =>      
-  Q3 =>  
+  Q1 =>   Fixed bugs with the alternate admin interface 
+  Q2 =>   Working on deployment on AWS
+  Q3 =>  No Blockers
 
 
 ## Week 7:
@@ -166,8 +164,8 @@ Project Journal
   Q3 =>  
 
 #### Tejas
-  Q1 =>    
-  Q2 =>     
-  Q3 =>   
+  Q1 => Deployed final code on AWS. Load balancer with auto-scaling group connected to a AWS mySQL RDS instance.   
+  Q2 => Worked on Documentation
+  Q3 => No Blockers
 
 
