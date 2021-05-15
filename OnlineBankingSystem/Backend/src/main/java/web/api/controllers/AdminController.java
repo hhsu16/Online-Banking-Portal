@@ -16,8 +16,8 @@ import web.api.services.UserService;
 
 import java.util.List;
 
-@CrossOrigin(origins = "http://localhost:3000")
-@Controller
+@CrossOrigin(origins = "http://localhost:8081")
+@RestController
 public class AdminController {
 
     private final ProspectService prospectService;

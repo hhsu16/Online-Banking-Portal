@@ -9,8 +9,9 @@ import web.api.services.*;
 
 import java.util.List;
 
+
+@CrossOrigin(origins = "http://localhost:8081")
 @RestController
-@CrossOrigin("http://localhost:3000/")
 public class CustomerController {
 
     private final PayeeUserRelationService payeeUserRelationService;
