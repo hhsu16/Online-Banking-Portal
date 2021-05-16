@@ -9,7 +9,8 @@ Project Journal
 
 
 #### Vamsi
-  Q1 => Going through the project requirements, setup github project. 
+  Q1 => Going through the project requirements, setup github project.
+  
   Q2 => Deciding the tech stack required for project implementation and Database deisgn for the project.   
   Q3 => No blockers     
     
@@ -33,6 +34,7 @@ Project Journal
 
 #### Vamsi
   Q1 => Implemented the Database design with few neccessary tables.
+  
   Q2 => Need to discuss and finalize the User flows.
   Q3 => No blockers   
     
@@ -57,6 +59,7 @@ Project Journal
 
 #### Vamsi
   Q1 => Finalized the user flows and the design pattern for implementation.
+  
   Q2 => Need to explore some tutorials on Spring Boot, Spring Data JPA and Spring Security.
   Q3 => No blockers.
     
@@ -79,7 +82,8 @@ Project Journal
 
 
 #### Vamsi
-  Q1 =>  Gathered required knowledge on Spring Boot, Spring Data JPA and Spring Security. 
+  Q1 =>  Gathered required knowledge on Spring Boot, Spring Data JPA and Spring Security.
+  
   Q2 =>  Create required models and repositories using Spring Data JPA with MySQL database integration.
   Q3 =>  No blockers   
     
@@ -103,6 +107,7 @@ Project Journal
 
 #### Vamsi
   Q1 =>  Implemented required models and repositories using Spring Data JPA and established successful connection with MySql database. 
+  
   Q2 =>  Implement Login functionality with necessary Controllers and Service classes.
   Q3 =>  No blockers
     
