@@ -10,7 +10,6 @@ Project Journal
 
 #### Vamsi
   Q1 => Going through the project requirements, setup github project.
-  
   Q2 => Deciding the tech stack required for project implementation and Database deisgn for the project.   
   Q3 => No blockers     
     
@@ -82,10 +81,9 @@ Project Journal
 
 
 #### Vamsi
-  Q1 =>  Gathered required knowledge on Spring Boot, Spring Data JPA and Spring Security.
-  
-  Q2 =>  Create required models and repositories using Spring Data JPA with MySQL database integration.
-  Q3 =>  No blockers   
+  Q1 => Gathered required knowledge on Spring Boot, Spring Data JPA and Spring Security.
+  Q2 => Create required models and repositories using Spring Data JPA with MySQL database integration.
+  Q3 => No blockers   
     
 #### Shreshta
   Q1 => Started working on Transaction module,   
@@ -107,7 +105,6 @@ Project Journal
 
 #### Vamsi
   Q1 =>  Implemented required models and repositories using Spring Data JPA and established successful connection with MySql database. 
-  
   Q2 =>  Implement Login functionality with necessary Controllers and Service classes.
   Q3 =>  No blockers
     
@@ -132,7 +129,6 @@ Project Journal
 
 #### Vamsi
   Q1 => Implemented Login functionality, code corrections for Registration module and implementing Spring Security for backend with JWT authentication and authorization.
-  
   Q2 => Implement Account creation, transactions, payee registration, fund transfer(onetime/recurring), Account closure and Admin core functionalities.
   Q3 => Blocked with Backend implementation with Spring Security integration.
     
@@ -156,7 +152,6 @@ Project Journal
 
 #### Vamsi
   Q1 => Completed with Implementation of Account creation, transactions, payee registration, fund transfer(onetime/recurring), Account closure and Admin core functionalities such as Add Refund fee and Accept Customer account closure requests.
-  
   Q2 => Test the user flows for backend using Postman, verifying the api responses and fixing the issues.
   Q3 => No blockers.
     
