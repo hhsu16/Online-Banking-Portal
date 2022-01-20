@@ -1,10 +1,3 @@
-## Team Members
-
-- Vamsi Srinivas Chalamolu
-- Kevin Hsu
-- Shreshta Balmuri
-- Tejas Desai
-
 ## Online Banking features:
 
 ### User:
